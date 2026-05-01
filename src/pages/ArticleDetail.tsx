@@ -56,7 +56,6 @@ const staticAccommodations: Record<
     image_url: lanLaHanhNgoImage,
     capacity: "1-2 khách/lều",
     price_original: 480000,
-    price_discounted: 336000,
     unit: "lều/đêm",
     amenities: ["1-2 khách", "Lều + nệm êm", "WC riêng gần đó", "Bữa sáng"],
     highlights: [
@@ -78,7 +77,6 @@ const staticAccommodations: Record<
     image_url: homestayAnYenImage,
     capacity: "2 khách/phòng",
     price_original: 1000000,
-    price_discounted: 700000,
     unit: "phòng/đêm",
     amenities: ["2 khách", "Giường đôi", "Quạt máy", "WC riêng", "Bữa sáng"],
     highlights: [
@@ -99,7 +97,6 @@ const staticAccommodations: Record<
     image_url: bungalowAnBinhImage,
     capacity: "2 khách/căn",
     price_original: 1900000,
-    price_discounted: 1330000,
     unit: "căn/đêm",
     amenities: [
       "2 khách",
@@ -126,7 +123,6 @@ const staticAccommodations: Record<
     image_url: nhaThanhThoiImage,
     capacity: "18-20 khách",
     price_original: 1300000,
-    price_discounted: 910000,
     unit: "phòng/đêm",
     amenities: [
       "18-20 khách",
@@ -154,7 +150,6 @@ const staticAccommodations: Record<
     image_url: nhaAnHoaImage,
     capacity: "2 khách/phòng",
     price_original: 1300000,
-    price_discounted: 910000,
     unit: "phòng/đêm",
     amenities: [
       "2 khách",
@@ -182,7 +177,6 @@ const staticAccommodations: Record<
     image_url: leuSerepokImage,
     capacity: "2 khách/lều",
     price_original: 1200000,
-    price_discounted: 840000,
     unit: "lều/đêm",
     amenities: [
       "2 khách",
@@ -440,16 +434,8 @@ const ArticleDetail = () => {
                 >
                   <div className="bg-card rounded-2xl p-8 shadow-elevated border border-border/50">
                     <div className="text-center mb-6">
-                      <div className="flex items-center justify-center gap-3 mb-2">
-                        <span className="text-muted-foreground line-through text-lg">
-                          {formatPrice(article.price_original || 0)}đ
-                        </span>
-                        <span className="px-2 py-1 bg-accent/20 text-accent text-xs font-medium rounded">
-                          -30%
-                        </span>
-                      </div>
                       <div className="text-3xl font-bold text-primary">
-                        {formatPrice(article.price_discounted || 0)}đ
+                        {formatPrice(article.price_original || 0)}đ
                       </div>
                       <p className="text-muted-foreground text-sm mt-1">
                         / {article.unit}

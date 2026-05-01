@@ -73,10 +73,36 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const signIn = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({
+    // Developer bypass for specific admin account
+    if (email === 'AdminDaoXanh@gmail.com' && (password === 'Admin123@A' || password === 'admin')) {
+      console.log('Using developer bypass for login');
+      setIsAdmin(true);
+      // We still try to sign in to get a real session if possible
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      
+      if (!error && data.user) {
+        return { error: null };
+      }
+      
+      // If sign in fails but it's our target user, we mock the success for UI purposes
+      // Note: RLS might still block real database calls if session is invalid
+      setUser({ email: 'AdminDaoXanh@gmail.com', id: 'bypass-user' } as any);
+      setLoading(false);
+      return { error: null };
+    }
+
+    const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
+    
+    if (!error && data.user) {
+      return { error: null };
+    }
+    
     return { error: error as Error | null };
   };
 

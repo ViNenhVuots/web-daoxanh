@@ -444,8 +444,6 @@ const Services = () => {
                     nhớ.
                   </p>
                   <div className="flex items-center gap-3 text-sm text-muted-foreground mb-8">
-                    <Sparkles size={18} className="text-accent" />
-                    <span>Giảm đến 30% so với giá lẻ</span>
                   </div>
                 </motion.div>
 

@@ -24,7 +24,6 @@ const accommodationSchema = z.object({
   image_url: z.string().url().optional().or(z.literal('')),
   capacity: z.string().max(100).optional(),
   price_original: z.number().min(0).optional(),
-  price_discounted: z.number().min(0).optional(),
   unit: z.string().max(50).optional(),
   location: z.string().max(200).optional(),
   rating: z.number().min(0).max(5).optional(),
@@ -52,7 +51,6 @@ export default function AccommodationEditor() {
     image_url: '',
     capacity: '',
     price_original: 0,
-    price_discounted: 0,
     unit: 'đêm',
     location: 'Đảo Xanh Ecofarm',
     rating: 4.5,
@@ -92,7 +90,6 @@ export default function AccommodationEditor() {
         image_url: existingData.image_url || '',
         capacity: existingData.capacity || '',
         price_original: existingData.price_original || 0,
-        price_discounted: existingData.price_discounted || 0,
         unit: existingData.unit || 'đêm',
         location: existingData.location || 'Đảo Xanh Ecofarm',
         rating: existingData.rating || 4.5,
@@ -170,7 +167,7 @@ export default function AccommodationEditor() {
         image_url: data.image_url || null,
         capacity: data.capacity || null,
         price_original: data.price_original,
-        price_discounted: data.price_discounted,
+        price_discounted: data.price_original,
         unit: data.unit || null,
         location: data.location || null,
         rating: data.rating,
@@ -492,7 +489,7 @@ export default function AccommodationEditor() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="price_original">Giá gốc (VNĐ)</Label>
+                  <Label htmlFor="price_original">Giá (VNĐ)</Label>
                   <Input
                     id="price_original"
                     type="number"
@@ -501,19 +498,6 @@ export default function AccommodationEditor() {
                     onChange={(e) => setFormData((prev) => ({ 
                       ...prev, 
                       price_original: parseInt(e.target.value) || 0 
-                    }))}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="price_discounted">Giá khuyến mãi (VNĐ)</Label>
-                  <Input
-                    id="price_discounted"
-                    type="number"
-                    min="0"
-                    value={formData.price_discounted}
-                    onChange={(e) => setFormData((prev) => ({ 
-                      ...prev, 
-                      price_discounted: parseInt(e.target.value) || 0 
                     }))}
                   />
                 </div>

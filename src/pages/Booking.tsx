@@ -17,7 +17,6 @@ const accommodationOptions = [
     name: "Lán lá Hạnh Ngộ",
     description: "Cắm trại lều trong lán, view sông, gắn kết thiên nhiên",
     priceOriginal: 480000,
-    priceDiscounted: 336000,
     unit: "lều/1 khách",
   },
   {
@@ -25,7 +24,6 @@ const accommodationOptions = [
     name: "Homestay An Yên",
     description: "Nhà sàn, vách gỗ, mái cọ, view sông dưới tán dừa",
     priceOriginal: 1000000,
-    priceDiscounted: 700000,
     unit: "1 phòng/2 khách",
   },
   {
@@ -33,7 +31,6 @@ const accommodationOptions = [
     name: "Bungalow An Bình",
     description: "Nhà gỗ độc đáo, view sông, yên tĩnh, sang trọng",
     priceOriginal: 1900000,
-    priceDiscounted: 1330000,
     unit: "căn/2 khách",
   },
   {
@@ -41,7 +38,6 @@ const accommodationOptions = [
     name: "Nhà Thảnh Thơi",
     description: "Family hotel, view vườn thoáng mát, 18-20 khách",
     priceOriginal: 1300000,
-    priceDiscounted: 910000,
     unit: "1 phòng/2 khách",
   },
   {
@@ -49,7 +45,6 @@ const accommodationOptions = [
     name: "Nhà An Hòa",
     description: "Phong cách tân cổ điển, tiện nghi, gần trung tâm",
     priceOriginal: 1300000,
-    priceDiscounted: 910000,
     unit: "1 phòng/2 khách",
   },
   {
@@ -57,7 +52,6 @@ const accommodationOptions = [
     name: "Lều Sê Rê Pôk",
     description: "Glamping cao cấp, như khách sạn 4 sao, lãng mạn",
     priceOriginal: 1200000,
-    priceDiscounted: 840000,
     unit: "lều/2 khách",
   },
 ];
@@ -69,9 +63,7 @@ const comboPackages = [
     name: "Gói A",
     subtitle: "Cắm trại glamping lều đơn tại lán lá Hạnh Ngộ",
     priceAdult: 454000,
-    priceAdultOriginal: 649000,
     priceChild: 314000,
-    priceChildOriginal: 449000,
     hasAccommodation: false,
   },
   {
@@ -79,9 +71,7 @@ const comboPackages = [
     name: "Gói A1",
     subtitle: "Tùy chọn lưu trú",
     priceAdult: 524000,
-    priceAdultOriginal: 749000,
     priceChild: 384000,
-    priceChildOriginal: 549000,
     hasAccommodation: true,
   },
   {
@@ -89,9 +79,7 @@ const comboPackages = [
     name: "Gói A2",
     subtitle: "Nhà gỗ Bungalow cao cấp An Bình",
     priceAdult: 734000,
-    priceAdultOriginal: 1049000,
     priceChild: 594000,
-    priceChildOriginal: 849000,
     hasAccommodation: false,
   },
 ];
@@ -103,45 +91,35 @@ const dayTripPackages = [
     name: "Gói A",
     subtitle: "Nông trại tiêu chuẩn",
     priceAdult: 84000,
-    priceAdultOriginal: 120000,
     priceChild: 59000,
-    priceChildOriginal: 85000,
   },
   {
     id: "daytrip-a1",
     name: "Gói A1",
     subtitle: "Nông trại 5 sao",
     priceAdult: 137000,
-    priceAdultOriginal: null,
     priceChild: 112000,
-    priceChildOriginal: null,
   },
   {
     id: "daytrip-a1-bbq",
     name: "Gói A1 BBQ",
     subtitle: "Nông trại 5 sao + BBQ lẩu nướng",
     priceAdult: 258000,
-    priceAdultOriginal: null,
     priceChild: 209000,
-    priceChildOriginal: null,
   },
   {
     id: "daytrip-a2",
     name: "Gói A2",
     subtitle: "Nông trại 5 sao+",
     priceAdult: 189000,
-    priceAdultOriginal: null,
     priceChild: 165000,
-    priceChildOriginal: null,
   },
   {
     id: "daytrip-a2-bbq",
     name: "Gói A2 BBQ",
     subtitle: "Nông trại 5 sao+ + BBQ lẩu nướng",
     priceAdult: 314000,
-    priceAdultOriginal: null,
     priceChild: 265000,
-    priceChildOriginal: null,
   },
 ];
 
@@ -277,7 +255,7 @@ const Booking = () => {
 
       // Add accommodation price for A1 if selected
       if (formData.packageId === "combo-a1" && selectedAccommodation) {
-        total += selectedAccommodation.priceDiscounted;
+        total += selectedAccommodation.priceOriginal;
       }
     } else if (formData.serviceType === "day-trip" && selectedPackage) {
       // Day trip pricing - giá đã bao gồm BBQ cho các gói BBQ
@@ -291,7 +269,7 @@ const Booking = () => {
       if (checkIn && checkOut && checkOut > checkIn) {
         nights = Math.ceil((checkOut.getTime() - checkIn.getTime()) / (1000 * 60 * 60 * 24));
       }
-      total += selectedAccommodation.priceDiscounted * nights;
+      total += selectedAccommodation.priceOriginal * nights;
     }
 
     return total;
@@ -544,34 +522,24 @@ const Booking = () => {
                                       )}
                                     </div>
                                   </div>
-                                  <div className="text-right flex-shrink-0">
-                                    <div className="space-y-1">
-                                      <div className="flex items-center gap-2 justify-end">
-                                        {pkg.priceAdultOriginal && (
-                                          <span className="text-sm text-muted-foreground line-through">
-                                            {formatPrice(pkg.priceAdultOriginal)}
+                                    <div className="text-right flex-shrink-0">
+                                      <div className="space-y-1">
+                                        <div className="flex items-center gap-2 justify-end">
+                                          <span className="font-semibold text-primary">
+                                            {formatPrice(pkg.priceAdult)}
                                           </span>
-                                        )}
-                                        <span className="font-semibold text-primary">
-                                          {formatPrice(pkg.priceAdult)}
-                                        </span>
+                                        </div>
+                                        <p className="text-xs text-muted-foreground">Người lớn</p>
                                       </div>
-                                      <p className="text-xs text-muted-foreground">Người lớn</p>
-                                    </div>
-                                    <div className="space-y-1 mt-2">
-                                      <div className="flex items-center gap-2 justify-end">
-                                        {pkg.priceChildOriginal && (
-                                          <span className="text-sm text-muted-foreground line-through">
-                                            {formatPrice(pkg.priceChildOriginal)}
+                                      <div className="space-y-1 mt-2">
+                                        <div className="flex items-center gap-2 justify-end">
+                                          <span className="font-medium text-foreground">
+                                            {formatPrice(pkg.priceChild)}
                                           </span>
-                                        )}
-                                        <span className="font-medium text-foreground">
-                                          {formatPrice(pkg.priceChild)}
-                                        </span>
+                                        </div>
+                                        <p className="text-xs text-muted-foreground">Trẻ em</p>
                                       </div>
-                                      <p className="text-xs text-muted-foreground">Trẻ em</p>
                                     </div>
-                                  </div>
                                 </div>
                               </label>
                             ))}
@@ -681,11 +649,8 @@ const Booking = () => {
                                   </div>
                                   <div className="text-right flex-shrink-0">
                                     <div className="flex items-center gap-2 justify-end">
-                                      <span className="text-sm text-muted-foreground line-through">
-                                        {formatPrice(acc.priceOriginal)}
-                                      </span>
                                       <span className="font-semibold text-primary">
-                                        {formatPrice(acc.priceDiscounted)}
+                                        {formatPrice(acc.priceOriginal)}
                                       </span>
                                     </div>
                                     <p className="text-xs text-muted-foreground mt-1">{acc.unit}</p>
