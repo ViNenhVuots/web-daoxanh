@@ -1,0 +1,370 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Montserrat:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Luxury Resort Color Palette - High Contrast */
+    --background: 40 30% 98%;
+    --foreground: 30 20% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 30 20% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 30 20% 15%;
+
+    /* Deep Forest Green - Primary Brand */
+    --primary: 160 40% 22%;
+    --primary-foreground: 40 30% 98%;
+
+    /* Warm Sage - Secondary */
+    --secondary: 155 25% 45%;
+    --secondary-foreground: 40 30% 98%;
+
+    /* Warm Neutrals */
+    --muted: 40 20% 94%;
+    --muted-foreground: 30 15% 40%;
+
+    /* Luxurious Gold - Accent */
+    --accent: 38 70% 50%;
+    --accent-foreground: 30 20% 15%;
+
+    --destructive: 0 65% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 40 15% 88%;
+    --input: 40 15% 88%;
+    --ring: 160 40% 30%;
+
+    --radius: 0.5rem;
+
+    /* Extended palette */
+    --cream: 40 35% 95%;
+    --ivory: 45 40% 98%;
+    --forest: 160 40% 22%;
+    --forest-light: 155 30% 35%;
+    --gold: 38 70% 50%;
+    --gold-light: 42 65% 65%;
+    --champagne: 40 50% 90%;
+    --terracotta: 20 45% 55%;
+
+    /* Elegant shadows */
+    --shadow-soft: 0 4px 20px -4px hsl(30 20% 20% / 0.08);
+    --shadow-medium: 0 8px 30px -8px hsl(30 20% 20% / 0.12);
+    --shadow-large: 0 20px 50px -15px hsl(30 20% 20% / 0.15);
+    --shadow-glow: 0 0 40px hsl(38 70% 50% / 0.15);
+    --shadow-elevated: 0 25px 60px -12px hsl(30 20% 20% / 0.2);
+
+    /* Sidebar */
+    --sidebar-background: 40 35% 96%;
+    --sidebar-foreground: 30 20% 15%;
+    --sidebar-primary: 160 40% 22%;
+    --sidebar-primary-foreground: 40 30% 98%;
+    --sidebar-accent: 38 70% 50%;
+    --sidebar-accent-foreground: 30 20% 15%;
+    --sidebar-border: 40 15% 88%;
+    --sidebar-ring: 160 40% 30%;
+    --chart-1: 38 70% 50%;
+    --chart-2: 160 40% 35%;
+    --chart-3: 20 45% 55%;
+    --chart-4: 155 30% 45%;
+    --chart-5: 40 50% 70%;
+    --sidebar: 40 30% 98%;
+    --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
+    --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
+    --shadow-sm: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
+    --shadow: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
+    --shadow-md: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 2px 4px -1px hsl(0 0% 0% / 0.1);
+    --shadow-lg: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 4px 6px -1px hsl(0 0% 0% / 0.1);
+    --shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 8px 10px -1px hsl(0 0% 0% / 0.1);
+    --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
+    --tracking-normal: 0em;
+    --spacing: 0.25rem;
+  }
+
+  .dark {
+    --background: 30 15% 10%;
+    --foreground: 40 30% 95%;
+
+    --card: 30 15% 15%;
+    --card-foreground: 40 30% 95%;
+
+    --popover: 30 15% 15%;
+    --popover-foreground: 40 30% 95%;
+
+    --primary: 155 35% 50%;
+    --primary-foreground: 30 15% 10%;
+
+    --secondary: 160 30% 35%;
+    --secondary-foreground: 40 30% 95%;
+
+    --muted: 30 10% 20%;
+    --muted-foreground: 40 15% 65%;
+
+    --accent: 38 70% 55%;
+    --accent-foreground: 30 15% 10%;
+
+    --destructive: 0 60% 55%;
+    --destructive-foreground: 40 30% 95%;
+
+    --border: 30 10% 25%;
+    --input: 30 10% 25%;
+    --ring: 155 35% 50%;
+    --chart-1: 38 70% 55%;
+    --chart-2: 155 35% 50%;
+    --chart-3: 20 45% 60%;
+    --chart-4: 160 30% 50%;
+    --chart-5: 40 50% 70%;
+    --sidebar: 30 15% 12%;
+    --sidebar-foreground: 40 30% 95%;
+    --sidebar-primary: 155 35% 50%;
+    --sidebar-primary-foreground: 30 15% 10%;
+    --sidebar-accent: 38 70% 55%;
+    --sidebar-accent-foreground: 30 15% 10%;
+    --sidebar-border: 30 10% 25%;
+    --sidebar-ring: 155 35% 50%;
+    --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.15);
+    --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.15);
+    --shadow-sm: 0 1px 3px 0px hsl(0 0% 0% / 0.2), 0 1px 2px -1px hsl(0 0% 0% / 0.2);
+    --shadow: 0 1px 3px 0px hsl(0 0% 0% / 0.2), 0 1px 2px -1px hsl(0 0% 0% / 0.2);
+    --shadow-md: 0 1px 3px 0px hsl(0 0% 0% / 0.2), 0 2px 4px -1px hsl(0 0% 0% / 0.2);
+    --shadow-lg: 0 1px 3px 0px hsl(0 0% 0% / 0.2), 0 4px 6px -1px hsl(0 0% 0% / 0.2);
+    --shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.2), 0 8px 10px -1px hsl(0 0% 0% / 0.2);
+    --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.35);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Cormorant Garamond', serif;
+    @apply font-semibold tracking-wide;
+  }
+
+  /* Elegant selection */
+  ::selection {
+    @apply bg-accent/30 text-foreground;
+  }
+}
+
+@layer components {
+  /* Luxury Typography - Responsive */
+  .heading-hero {
+    @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-semibold leading-[1.1] tracking-wide;
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  .heading-section {
+    @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold leading-[1.15];
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  .heading-card {
+    @apply text-lg sm:text-xl md:text-2xl font-semibold;
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  .body-large {
+    @apply text-base sm:text-lg md:text-xl leading-relaxed font-light;
+  }
+
+  .body-regular {
+    @apply text-sm sm:text-base leading-relaxed;
+  }
+
+  .label-elegant {
+    @apply text-[10px] sm:text-xs md:text-sm uppercase tracking-[0.2em] sm:tracking-[0.25em] font-medium;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  .serif {
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  /* Elegant Buttons */
+  .btn-luxury {
+    @apply inline-flex items-center justify-center px-8 py-4 bg-primary text-primary-foreground 
+           font-medium uppercase tracking-wider rounded-sm transition-all duration-300
+           hover:bg-primary/90 hover:shadow-lg;
+  }
+
+  .btn-luxury-gold {
+    @apply inline-flex items-center justify-center px-8 py-4 bg-accent text-accent-foreground 
+           font-medium uppercase tracking-wider rounded-sm transition-all duration-300
+           hover:bg-accent/90 hover:shadow-lg;
+  }
+
+  .btn-luxury-outline {
+    @apply inline-flex items-center justify-center px-8 py-4 bg-transparent 
+           font-medium uppercase tracking-wider border border-primary/30 rounded-sm transition-all duration-300
+           hover:bg-primary hover:text-primary-foreground hover:border-primary;
+  }
+
+  /* Elegant Cards */
+  .card-luxury {
+    @apply relative bg-card rounded-lg overflow-hidden transition-all duration-500;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .card-luxury:hover {
+    box-shadow: var(--shadow-medium);
+    transform: translateY(-4px);
+  }
+
+  /* Decorative elements */
+  .line-elegant {
+    @apply w-16 h-px bg-accent;
+  }
+
+  .divider-ornament {
+    @apply flex items-center justify-center gap-4;
+  }
+
+  .divider-ornament::before,
+  .divider-ornament::after {
+    content: '';
+    @apply flex-1 h-px bg-border;
+  }
+
+  /* Scrollbar - Elegant */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-muted/50;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-primary/20 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-primary/40;
+  }
+
+  /* Elegant image treatment */
+  .img-luxury {
+    @apply rounded-lg overflow-hidden;
+    box-shadow: var(--shadow-medium);
+  }
+}
+
+@layer utilities {
+  /* Elegant Animations */
+  .animate-fade-up {
+    animation: fadeUp 0.8s ease-out forwards;
+  }
+
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Subtle parallax effect */
+  .parallax-subtle {
+    transition: transform 0.3s ease-out;
+  }
+
+  /* Hover effects - Elegant */
+  .hover-lift {
+    @apply transition-all duration-500;
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-large);
+  }
+
+  /* Image zoom on hover */
+  .hover-zoom {
+    @apply overflow-hidden;
+  }
+
+  .hover-zoom img {
+    @apply transition-transform duration-700 ease-out;
+  }
+
+  .hover-zoom:hover img {
+    transform: scale(1.08);
+  }
+
+  /* Gold underline animation */
+  .underline-gold {
+    @apply relative;
+  }
+
+  .underline-gold::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-500;
+  }
+
+  .underline-gold:hover::after {
+    @apply w-full;
+  }
+
+  /* Container variants */
+  .container-narrow {
+    @apply max-w-4xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .container-wide {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Section spacing */
+  .section-padding {
+    @apply py-16 sm:py-20 md:py-24 lg:py-32;
+  }
+
+  .section-padding-sm {
+    @apply py-12 sm:py-16 md:py-20;
+  }
+
+  /* Subtle pattern backgrounds */
+  .bg-pattern-subtle {
+    background-image: radial-gradient(circle at 1px 1px, hsl(var(--foreground) / 0.03) 1px, transparent 0);
+    background-size: 40px 40px;
+  }
+
+  /* Gradient overlays */
+  .gradient-overlay {
+    background: linear-gradient(to bottom, transparent 0%, hsl(var(--background)) 100%);
+  }
+
+  .gradient-dark-overlay {
+    background: linear-gradient(to top, hsl(30 15% 8% / 0.9) 0%, hsl(30 15% 8% / 0.4) 50%, transparent 100%);
+  }
+
+  /* Nature gradient background for sections */
+  .bg-gradient-nature {
+    background: linear-gradient(135deg, hsl(160 40% 22%) 0%, hsl(155 35% 30%) 100%);
+  }
+}
