@@ -107,12 +107,9 @@ export const en = {
     badge: "Book Today",
     title: "Ready for your",
     subtitle: "dream vacation?",
-    description: "Book online easily and quickly with exclusive offers just for you.",
+    description: "Book online easily and quickly to experience wonderful farm life at Dao Xanh Ecofarm.",
     bookNow: "Book Now",
     learnMore: "Learn More",
-    specialOffers: "Special Offers",
-    offers: [{ title: "30% Off Everything", desc: "Applies to all services" }],
-    offerNote: "* Valid until 13/02/2026",
   },
 
   // Footer

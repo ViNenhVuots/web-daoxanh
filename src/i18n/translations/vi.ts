@@ -107,12 +107,9 @@ export const vi = {
     badge: "Đặt phòng ngay hôm nay",
     title: "Sẵn sàng cho kỳ nghỉ",
     subtitle: "trong mơ?",
-    description: "Đặt phòng trực tuyến đơn giản, nhanh chóng với nhiều ưu đãi hấp dẫn dành riêng cho bạn.",
+    description: "Đặt phòng trực tuyến đơn giản, nhanh chóng để trải nghiệm cuộc sống nông trại tuyệt vời tại Đảo Xanh Ecofarm.",
     bookNow: "Đặt phòng ngay",
     learnMore: "Tìm hiểu thêm",
-    specialOffers: "Ưu đãi đặc biệt",
-    offers: [{ title: "Giảm 30% cho tất cả", desc: "Áp dụng cho mọi dịch vụ" }],
-    offerNote: "* Áp dụng đến 13/02/2026",
   },
 
   // Footer

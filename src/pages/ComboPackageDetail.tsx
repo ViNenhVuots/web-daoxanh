@@ -97,10 +97,6 @@ const ComboPackageDetail = () => {
                       <Users size={16} className="text-primary" />
                       <span>Phù hợp mọi lứa tuổi</span>
                     </div>
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <Sparkles size={16} className="text-accent" />
-                      <span>Giảm đến 30%</span>
-                    </div>
                   </div>
 
                   <div className="bg-card rounded-2xl p-6 border border-border/50">
