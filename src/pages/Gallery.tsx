@@ -4,32 +4,25 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
+import { useGalleryImages, GalleryImage } from "@/hooks/useGallery";
+import { Loader2 } from "lucide-react";
+
 import heroImage from "@/assets/hero-resort.jpg";
 import accommodationImage from "@/assets/accommodation/homestay-an-yen.jpg";
 import activitiesImage from "@/assets/services/ngoai-troi.jpg";
 import cuisineImage from "@/assets/services/am-thuc.jpg";
 import farmImage from "@/assets/services/nong-trai.jpg";
 
-const galleryImages = [
-  { src: heroImage, alt: "Toàn cảnh khu nghỉ dưỡng", category: "Cảnh quan" },
-  { src: accommodationImage, alt: "Phòng nghỉ sang trọng", category: "Lưu trú" },
-  { src: activitiesImage, alt: "Kayaking trên hồ", category: "Hoạt động" },
-  { src: cuisineImage, alt: "Ẩm thực địa phương", category: "Ẩm thực" },
-  { src: farmImage, alt: "Trải nghiệm nông trại", category: "Nông trại" },
-  { src: heroImage, alt: "Hoàng hôn tại resort", category: "Cảnh quan" },
-  { src: accommodationImage, alt: "View từ phòng nghỉ", category: "Lưu trú" },
-  { src: activitiesImage, alt: "Team building", category: "Hoạt động" },
-];
-
 const categories = ["Tất cả", "Cảnh quan", "Lưu trú", "Hoạt động", "Ẩm thực", "Nông trại"];
 
 const Gallery = () => {
   const [selectedCategory, setSelectedCategory] = useState("Tất cả");
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
+  const { data: galleryImages, isLoading } = useGalleryImages();
 
   const filteredImages = selectedCategory === "Tất cả"
-    ? galleryImages
-    : galleryImages.filter((img) => img.category === selectedCategory);
+    ? galleryImages || []
+    : (galleryImages || []).filter((img) => img.category === selectedCategory);
 
   const nextImage = () => {
     if (selectedImage !== null) {
@@ -92,38 +85,48 @@ const Gallery = () => {
         {/* Gallery Grid */}
         <section className="py-16 md:py-20 lg:py-24">
           <div className="container-wide">
-            <motion.div 
-              layout
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
-            >
-              <AnimatePresence mode="popLayout">
-                {filteredImages.map((image, index) => (
-                  <motion.div
-                    key={`${image.alt}-${index}`}
-                    layout
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
-                    transition={{ duration: 0.5 }}
-                    className="group cursor-pointer"
-                    onClick={() => setSelectedImage(index)}
-                  >
-                    <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-soft hover:shadow-elevated transition-shadow duration-500">
-                      <img
-                        src={image.src}
-                        alt={image.alt}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                      />
-                      <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/40 transition-colors duration-500" />
-                      <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
-                        <span className="text-xs text-accent uppercase tracking-wider block mb-1">{image.category}</span>
-                        <h3 className="text-primary-foreground font-serif text-lg font-medium">{image.alt}</h3>
+            {isLoading ? (
+              <div className="flex justify-center py-20">
+                <Loader2 className="h-10 w-10 animate-spin text-primary" />
+              </div>
+            ) : filteredImages.length > 0 ? (
+              <motion.div 
+                layout
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
+              >
+                <AnimatePresence mode="popLayout">
+                  {filteredImages.map((image, index) => (
+                    <motion.div
+                      key={image.id || index}
+                      layout
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.9 }}
+                      transition={{ duration: 0.5 }}
+                      className="group cursor-pointer"
+                      onClick={() => setSelectedImage(index)}
+                    >
+                      <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-soft hover:shadow-elevated transition-shadow duration-500">
+                        <img
+                          src={image.src}
+                          alt={image.alt || ''}
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        />
+                        <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/40 transition-colors duration-500" />
+                        <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                          <span className="text-xs text-accent uppercase tracking-wider block mb-1">{image.category}</span>
+                          <h3 className="text-primary-foreground font-serif text-lg font-medium">{image.alt}</h3>
+                        </div>
                       </div>
-                    </div>
-                  </motion.div>
-                ))}
-              </AnimatePresence>
-            </motion.div>
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
+              </motion.div>
+            ) : (
+              <div className="text-center py-20 bg-muted/20 rounded-3xl border-2 border-dashed">
+                <p className="text-muted-foreground">Chưa có hình ảnh nào trong thư viện này.</p>
+              </div>
+            )}
           </div>
         </section>
 

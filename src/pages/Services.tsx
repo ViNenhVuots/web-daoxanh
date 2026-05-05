@@ -37,40 +37,40 @@ import leuSerepokImage from "@/assets/accommodation/leu-serepok.jpg";
 // Static fallback data
 const staticAccommodations = [
   {
-    name: "Lán lá Hạnh Ngộ",
-    description: "Cắm trại lều trong lán, view sông, gắn kết thiên nhiên",
-    image_url: lanLaHanhNgoImage,
-    slug: "lan-la-hanh-ngo",
-  },
-  {
-    name: "Homestay An Yên",
-    description: "Nhà sàn, vách gỗ, mái cọ, view sông dưới tán dừa",
-    image_url: homestayAnYenImage,
-    slug: "homestay-an-yen",
-  },
-  {
     name: "Bungalow An Bình",
-    description: "Nhà gỗ độc đáo, view sông, yên tĩnh, sang trọng",
+    description: "Nhà gỗ cao cấp, view sông, không gian nghệ thuật sang trọng và yên tĩnh. Giá: 1.900k/căn/2 khách.",
     image_url: bungalowAnBinhImage,
     slug: "bungalow-an-binh",
   },
   {
-    name: "Nhà Thảnh Thơi",
-    description: "Family hotel, view vườn thoáng mát, 18-20 khách",
-    image_url: nhaThanhThoiImage,
-    slug: "nha-thanh-thoi",
-  },
-  {
-    name: "Nhà An Hòa",
-    description: "Phong cách tân cổ điển, tiện nghi, gần trung tâm",
+    name: "Phòng khách sạn An Hòa",
+    description: "Phong cách tân cổ điển, sang trọng, gần trung tâm, tiện nghi đầy đủ cho lưu trú dài ngày. Giá: 1.300k/phòng/2 khách.",
     image_url: nhaAnHoaImage,
     slug: "nha-an-hoa",
   },
   {
-    name: "Lều Sê Rê Pôk",
-    description: "Glamping cao cấp, như khách sạn 4 sao, lãng mạn",
+    name: "Nhà Family Thảnh Thơi",
+    description: "View vườn thoáng mát, thiết kế hài hòa giữa thiên nhiên và hiện đại. Phù hợp nhóm 18-20 khách. Giá: 1.300k/phòng.",
+    image_url: nhaThanhThoiImage,
+    slug: "nha-thanh-thoi",
+  },
+  {
+    name: "Lều/Glamping Sê Rê Pốk",
+    description: "Cắm trại chuẩn 4 sao với nệm lò xo, máy lạnh, mini bar. Dành cho cặp đôi lãng mạn. Giá: 1.200k/lều/2 khách.",
     image_url: leuSerepokImage,
     slug: "leu-serepok",
+  },
+  {
+    name: "Homestay An Yên",
+    description: "Nhà sàn, vách gỗ, mái cọ mộc mạc, view sông dưới tán dừa. Nơi chữa lành tâm hồn. Giá: 900k - 1.100k/phòng.",
+    image_url: homestayAnYenImage,
+    slug: "homestay-an-yen",
+  },
+  {
+    name: "Lán lá Hạnh Ngộ",
+    description: "Cắm trại lều trong lán, an toàn, tiện lợi, view sông gắn kết đội nhóm. Giá: 480k/lều/1 khách.",
+    image_url: lanLaHanhNgoImage,
+    slug: "lan-la-hanh-ngo",
   },
 ];
 
