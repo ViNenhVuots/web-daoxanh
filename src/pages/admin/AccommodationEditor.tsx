@@ -505,7 +505,6 @@ export default function AccommodationEditor() {
                   />
                 </div>
                 <div className="space-y-2">
-                <div className="space-y-2">
                   <Label htmlFor="unit">Đơn vị</Label>
                   <Input
                     id="unit"

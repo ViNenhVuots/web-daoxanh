@@ -443,7 +443,6 @@ const ArticleDetail = () => {
                       <div className="text-3xl font-bold text-primary">
                         {formatPrice(article.price_original || 0)}đ
                       </div>
-                      </div>
                       <p className="text-muted-foreground text-sm mt-1">
                         / {article.unit}
                       </p>
