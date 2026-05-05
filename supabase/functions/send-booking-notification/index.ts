@@ -30,21 +30,21 @@ const cleanExpiredEntries = () => {
 // Check rate limit for a given IP
 const checkRateLimit = (clientIp: string): { allowed: boolean; remaining: number; resetIn: number } => {
   cleanExpiredEntries();
-  
+
   const now = Date.now();
   const record = rateLimitStore.get(clientIp);
-  
+
   if (!record || now > record.resetTime) {
     // First request or window expired - create new record
     rateLimitStore.set(clientIp, { count: 1, resetTime: now + RATE_LIMIT_WINDOW_MS });
     return { allowed: true, remaining: MAX_REQUESTS_PER_WINDOW - 1, resetIn: RATE_LIMIT_WINDOW_MS };
   }
-  
+
   if (record.count >= MAX_REQUESTS_PER_WINDOW) {
     // Rate limit exceeded
     return { allowed: false, remaining: 0, resetIn: record.resetTime - now };
   }
-  
+
   // Increment counter
   record.count++;
   return { allowed: true, remaining: MAX_REQUESTS_PER_WINDOW - record.count, resetIn: record.resetTime - now };
@@ -183,32 +183,32 @@ const calculateTotalPrice = (bookingData: BookingRequest): number => {
 const handler = async (req: Request): Promise<Response> => {
   const origin = req.headers.get("origin");
   const corsHeaders = getCorsHeaders(origin);
-  
+
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   // Get client IP for rate limiting
-  const clientIp = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || 
-                   req.headers.get("cf-connecting-ip") || 
-                   "unknown";
-  
+  const clientIp = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    req.headers.get("cf-connecting-ip") ||
+    "unknown";
+
   // Check rate limit
   const rateLimitResult = checkRateLimit(clientIp);
   if (!rateLimitResult.allowed) {
     console.warn(`Rate limit exceeded for IP: ${clientIp}`);
     return new Response(
-      JSON.stringify({ 
-        error: "Quá nhiều yêu cầu. Vui lòng thử lại sau.", 
-        retryAfter: Math.ceil(rateLimitResult.resetIn / 1000) 
+      JSON.stringify({
+        error: "Quá nhiều yêu cầu. Vui lòng thử lại sau.",
+        retryAfter: Math.ceil(rateLimitResult.resetIn / 1000)
       }),
       {
         status: 429,
-        headers: { 
-          "Content-Type": "application/json", 
+        headers: {
+          "Content-Type": "application/json",
           "Retry-After": String(Math.ceil(rateLimitResult.resetIn / 1000)),
-          ...corsHeaders 
+          ...corsHeaders
         },
       }
     );
@@ -216,7 +216,7 @@ const handler = async (req: Request): Promise<Response> => {
 
   try {
     const rawData = await req.json();
-    
+
     // Check honeypot field - if filled, it's likely a bot
     if (rawData.website && rawData.website.length > 0) {
       console.warn(`Honeypot triggered from IP: ${clientIp}`);
@@ -226,15 +226,15 @@ const handler = async (req: Request): Promise<Response> => {
         headers: { "Content-Type": "application/json", ...corsHeaders },
       });
     }
-    
+
     // Validate input using zod schema
     const parseResult = bookingSchema.safeParse(rawData);
     if (!parseResult.success) {
       console.error("Validation failed:", parseResult.error.errors);
       return new Response(
-        JSON.stringify({ 
-          error: "Dữ liệu không hợp lệ", 
-          details: parseResult.error.errors.map((e: any) => e.message) 
+        JSON.stringify({
+          error: "Dữ liệu không hợp lệ",
+          details: parseResult.error.errors.map((e: any) => e.message)
         }),
         {
           status: 400,
@@ -242,7 +242,7 @@ const handler = async (req: Request): Promise<Response> => {
         }
       );
     }
-    
+
     const bookingData: BookingRequest = parseResult.data;
 
     // Format date for display
@@ -367,9 +367,9 @@ const handler = async (req: Request): Promise<Response> => {
                 </td>
               </tr>
               ${(() => {
-                const totalPrice = calculateTotalPrice(bookingData);
-                if (totalPrice > 0) {
-                  return `
+        const totalPrice = calculateTotalPrice(bookingData);
+        if (totalPrice > 0) {
+          return `
                     <tr style="background-color: #f0fdf4;">
                       <td style="padding: 16px 12px; color: #15803d; font-weight: 600; font-size: 16px;">💰 Tổng tiền</td>
                       <td style="padding: 16px 12px; font-weight: 700; color: #15803d; font-size: 18px;">${formatPrice(totalPrice)}</td>
@@ -380,9 +380,9 @@ const handler = async (req: Request): Promise<Response> => {
                       </td>
                     </tr>
                   `;
-                }
-                return "";
-              })()}
+        }
+        return "";
+      })()}
               ${notesInfo}
             </table>
             
