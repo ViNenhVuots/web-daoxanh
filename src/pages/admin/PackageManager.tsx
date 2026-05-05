@@ -38,9 +38,27 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Plus, Pencil, Trash2, Loader2, X, Package } from 'lucide-react';
+import { Plus, Pencil, Trash2, Loader2, X, Package, GripVertical } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import ImageUploader from '@/components/admin/ImageUploader';
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragEndEvent
+} from '@dnd-kit/core';
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+  useSortable
+} from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
+import { cn } from '@/lib/utils';
 
 interface ComboPackage {
   id: string;
@@ -203,6 +221,54 @@ function PackageTable({
     },
   });
 
+  const updateOrderMutation = useMutation({
+    mutationFn: async (updatedPackages: any[]) => {
+      const updates = updatedPackages.map((pkg, index) => ({
+        id: pkg.id,
+        display_order: index,
+      }));
+
+      // Update each item
+      for (const update of updates) {
+        const { error } = await supabase
+          .from(tableName)
+          .update({ display_order: update.display_order })
+          .eq('id', update.id);
+        if (error) throw error;
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [queryKey] });
+    },
+    onError: () => {
+      toast({ variant: 'destructive', title: 'Lỗi', description: 'Không thể cập nhật thứ tự.' });
+    },
+  });
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+
+    if (over && active.id !== over.id) {
+      const oldIndex = packages.findIndex((p) => p.id === active.id);
+      const newIndex = packages.findIndex((p) => p.id === over.id);
+
+      const newOrder = arrayMove(packages, oldIndex, newIndex);
+      
+      // Optimistically update the UI
+      queryClient.setQueryData([queryKey], newOrder);
+      
+      // Update the database
+      updateOrderMutation.mutate(newOrder);
+    }
+  };
+
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
@@ -228,85 +294,44 @@ function PackageTable({
             <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
           </div>
         ) : packages.length > 0 ? (
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Tên gói</TableHead>
-                <TableHead>Giá người lớn</TableHead>
-                <TableHead>Giá trẻ em</TableHead>
-                <TableHead>Trạng thái</TableHead>
-                <TableHead className="text-right">Thao tác</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {packages.map((pkg) => (
-                <TableRow key={pkg.id}>
-                  <TableCell className="font-medium">
-                    <div>
-                      {pkg.name}
-                      {'subtitle' in pkg && pkg.subtitle && (
-                        <p className="text-xs text-muted-foreground">{pkg.subtitle}</p>
-                      )}
-                    </div>
-                  </TableCell>
-                  <TableCell>{formatPrice(pkg.price_adult)}</TableCell>
-                  <TableCell>{pkg.price_child ? formatPrice(pkg.price_child) : '-'}</TableCell>
-                  <TableCell>
-                    <Switch
-                      checked={pkg.published}
-                      onCheckedChange={(checked) => 
-                        togglePublishMutation.mutate({ id: pkg.id, published: checked })
-                      }
-                    />
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <div className="flex items-center justify-end gap-2">
-                      <PackageDialog
+            <DndContext
+              sensors={sensors}
+              collisionDetection={closestCenter}
+              onDragEnd={handleDragEnd}
+            >
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Tên gói</TableHead>
+                    <TableHead>Giá người lớn</TableHead>
+                    <TableHead>Giá trẻ em</TableHead>
+                    <TableHead>Trạng thái</TableHead>
+                    <TableHead className="text-right">Thao tác</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  <SortableContext
+                    items={packages.map(p => p.id)}
+                    strategy={verticalListSortingStrategy}
+                  >
+                    {packages.map((pkg) => (
+                      <SortableRow
+                        key={pkg.id}
+                        pkg={pkg}
                         type={type}
-                        package={pkg}
-                        isOpen={editingPackage?.id === pkg.id}
-                        setIsOpen={(open) => {
-                          if (open) setEditingPackage(pkg);
-                          else setEditingPackage(null);
-                        }}
+                        formatPrice={formatPrice}
+                        togglePublishMutation={togglePublishMutation}
+                        editingPackage={editingPackage}
+                        setEditingPackage={setEditingPackage}
+                        deleteMutation={deleteMutation}
                         queryClient={queryClient}
                         toast={toast}
-                        trigger={
-                          <Button variant="ghost" size="icon">
-                            <Pencil className="h-4 w-4" />
-                          </Button>
-                        }
                       />
-                      <AlertDialog>
-                        <AlertDialogTrigger asChild>
-                          <Button variant="ghost" size="icon">
-                            <Trash2 className="h-4 w-4 text-destructive" />
-                          </Button>
-                        </AlertDialogTrigger>
-                        <AlertDialogContent>
-                          <AlertDialogHeader>
-                            <AlertDialogTitle>Xóa gói dịch vụ?</AlertDialogTitle>
-                            <AlertDialogDescription>
-                              Bạn có chắc chắn muốn xóa "{pkg.name}"?
-                            </AlertDialogDescription>
-                          </AlertDialogHeader>
-                          <AlertDialogFooter>
-                            <AlertDialogCancel>Hủy</AlertDialogCancel>
-                            <AlertDialogAction
-                              onClick={() => deleteMutation.mutate(pkg.id)}
-                              className="bg-destructive text-destructive-foreground"
-                            >
-                              Xóa
-                            </AlertDialogAction>
-                          </AlertDialogFooter>
-                        </AlertDialogContent>
-                      </AlertDialog>
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+                    ))}
+                  </SortableContext>
+                </TableBody>
+              </Table>
+            </DndContext>
         ) : (
           <div className="text-center py-8 text-muted-foreground">
             <Package className="h-12 w-12 mx-auto mb-4 opacity-50" />
@@ -315,6 +340,114 @@ function PackageTable({
         )}
       </CardContent>
     </Card>
+  );
+}
+
+function SortableRow({ 
+  pkg, 
+  type, 
+  formatPrice, 
+  togglePublishMutation, 
+  editingPackage, 
+  setEditingPackage, 
+  deleteMutation,
+  queryClient,
+  toast
+}: any) {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging
+  } = useSortable({ id: pkg.id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    zIndex: isDragging ? 10 : 0,
+  };
+
+  return (
+    <TableRow 
+      ref={setNodeRef} 
+      style={style}
+      className={cn(
+        "transition-colors",
+        isDragging ? "opacity-50 border-primary ring-2 ring-primary/20 bg-primary/5 z-10" : "hover:bg-muted/50"
+      )}
+    >
+      <TableCell className="font-medium">
+        <div>
+          {pkg.name}
+          {'subtitle' in pkg && pkg.subtitle && (
+            <p className="text-xs text-muted-foreground">{pkg.subtitle}</p>
+          )}
+        </div>
+      </TableCell>
+      <TableCell>{formatPrice(pkg.price_adult)}</TableCell>
+      <TableCell>{pkg.price_child ? formatPrice(pkg.price_child) : '-'}</TableCell>
+      <TableCell>
+        <Switch
+          checked={pkg.published}
+          onCheckedChange={(checked) => 
+            togglePublishMutation.mutate({ id: pkg.id, published: checked })
+          }
+        />
+      </TableCell>
+      <TableCell className="text-right">
+        <div className="flex items-center justify-end gap-1">
+          <div 
+            className="p-2 cursor-grab active:cursor-grabbing text-muted-foreground hover:text-primary transition-colors" 
+            {...attributes} 
+            {...listeners}
+          >
+            <GripVertical className="h-4 w-4" />
+          </div>
+          <PackageDialog
+            type={type}
+            package={pkg}
+            isOpen={editingPackage?.id === pkg.id}
+            setIsOpen={(open) => {
+              if (open) setEditingPackage(pkg);
+              else setEditingPackage(null);
+            }}
+            queryClient={queryClient}
+            toast={toast}
+            trigger={
+              <Button variant="ghost" size="icon" className="h-8 w-8">
+                <Pencil className="h-4 w-4" />
+              </Button>
+            }
+          />
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button variant="ghost" size="icon" className="h-8 w-8">
+                <Trash2 className="h-4 w-4 text-destructive" />
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Xóa gói dịch vụ?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  Bạn có chắc chắn muốn xóa "{pkg.name}"?
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Hủy</AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={() => deleteMutation.mutate(pkg.id)}
+                  className="bg-destructive text-destructive-foreground"
+                >
+                  Xóa
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        </div>
+      </TableCell>
+    </TableRow>
   );
 }
 
@@ -352,6 +485,7 @@ function PackageDialog({ type, package: pkg, isOpen, setIsOpen, queryClient, toa
         price_adult: formData.price_adult,
         price_child: formData.price_child || null,
         includes: formData.includes,
+        image_url: formData.image_url,
         display_order: formData.display_order,
         published: formData.published,
         ...(type === 'combo' ? { subtitle: formData.subtitle || null } : {}),
@@ -427,7 +561,7 @@ function PackageDialog({ type, package: pkg, isOpen, setIsOpen, queryClient, toa
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         {trigger || (
-          <Button>
+          <Button className="bg-accent hover:bg-accent/90 text-accent-foreground">
             <Plus className="h-4 w-4 mr-2" />
             Thêm gói mới
           </Button>
@@ -521,7 +655,7 @@ function PackageDialog({ type, package: pkg, isOpen, setIsOpen, queryClient, toa
             </div>
           </div>
           <div className="space-y-2">
-            <Label>Hình ảnh</Label>
+            <Label>Ảnh bìa</Label>
             <ImageUploader
               value={formData.image_url || ''}
               onChange={(url) => setFormData((prev) => ({ ...prev, image_url: url }))}
