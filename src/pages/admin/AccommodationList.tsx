@@ -32,11 +32,7 @@ interface Accommodation {
   slug: string;
   name: string;
   capacity: string | null;
-<<<<<<< HEAD
   price_original: number | null;
-=======
-  price_discounted: number | null;
->>>>>>> cf002d2444b7fa3946c60411664b8744480f2a61
   published: boolean;
 }
 
@@ -49,11 +45,7 @@ export default function AccommodationList() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from('accommodations')
-<<<<<<< HEAD
         .select('id, slug, name, capacity, price_original, published')
-=======
-        .select('id, slug, name, capacity, price_discounted, published')
->>>>>>> cf002d2444b7fa3946c60411664b8744480f2a61
         .order('display_order', { ascending: true });
       if (error) throw error;
       return data as Accommodation[];
@@ -152,11 +144,7 @@ export default function AccommodationList() {
                           <Badge variant="outline">{item.capacity}</Badge>
                         )}
                       </TableCell>
-<<<<<<< HEAD
                       <TableCell>{formatPrice(item.price_original)}</TableCell>
-=======
-                      <TableCell>{formatPrice(item.price_discounted)}</TableCell>
->>>>>>> cf002d2444b7fa3946c60411664b8744480f2a61
                       <TableCell>
                         <Button
                           variant="ghost"

@@ -18,14 +18,10 @@ import {
   Loader2,
   Menu,
   X,
-<<<<<<< HEAD
   Leaf,
   Eye,
   EyeOff,
   Image as ImageIcon
-=======
-  Leaf
->>>>>>> cf002d2444b7fa3946c60411664b8744480f2a61
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { z } from 'zod';
@@ -39,10 +35,7 @@ const navItems = [
   { href: '/admin/blog', label: 'Bài viết', icon: FileText },
   { href: '/admin/accommodations', label: 'Lưu trú', icon: Home },
   { href: '/admin/packages', label: 'Gói dịch vụ', icon: Package },
-<<<<<<< HEAD
   { href: '/admin/gallery', label: 'Thư viện ảnh', icon: ImageIcon },
-=======
->>>>>>> cf002d2444b7fa3946c60411664b8744480f2a61
 ];
 
 const authSchema = z.object({
@@ -53,10 +46,7 @@ const authSchema = z.object({
 function AdminLoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-<<<<<<< HEAD
   const [showPassword, setShowPassword] = useState(false);
-=======
->>>>>>> cf002d2444b7fa3946c60411664b8744480f2a61
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
   
@@ -166,7 +156,6 @@ function AdminLoginForm() {
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="login-password">Mật khẩu</Label>
-<<<<<<< HEAD
                   <div className="relative">
                     <Input
                       id="login-password"
@@ -185,16 +174,6 @@ function AdminLoginForm() {
                       {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                     </button>
                   </div>
-=======
-                  <Input
-                    id="login-password"
-                    type="password"
-                    placeholder="••••••••"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    disabled={isLoading}
-                  />
->>>>>>> cf002d2444b7fa3946c60411664b8744480f2a61
                   {errors.password && (
                     <p className="text-sm text-destructive">{errors.password}</p>
                   )}
@@ -230,7 +209,6 @@ function AdminLoginForm() {
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="register-password">Mật khẩu</Label>
-<<<<<<< HEAD
                   <div className="relative">
                     <Input
                       id="register-password"
@@ -249,16 +227,6 @@ function AdminLoginForm() {
                       {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                     </button>
                   </div>
-=======
-                  <Input
-                    id="register-password"
-                    type="password"
-                    placeholder="••••••••"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    disabled={isLoading}
-                  />
->>>>>>> cf002d2444b7fa3946c60411664b8744480f2a61
                   {errors.password && (
                     <p className="text-sm text-destructive">{errors.password}</p>
                   )}

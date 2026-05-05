@@ -37,9 +37,8 @@ import leuSerepokImage from "@/assets/accommodation/leu-serepok.jpg";
 // Static fallback data
 const staticAccommodations = [
   {
-<<<<<<< HEAD
     name: "Bungalow An Bình",
-    description: "Nhà gỗ cao cấp, view sông, không gian nghệ thuật sang trọng và yên tĩnh. Giá: 1.900k/căn/2 khách.",
+    description: "Nhà gỗ cao cấp, view sông, không gian nghệ thuật sang trọng and yên tĩnh. Giá: 1.900k/căn/2 khách.",
     image_url: bungalowAnBinhImage,
     slug: "bungalow-an-binh",
   },
@@ -64,49 +63,14 @@ const staticAccommodations = [
   {
     name: "Homestay An Yên",
     description: "Nhà sàn, vách gỗ, mái cọ mộc mạc, view sông dưới tán dừa. Nơi chữa lành tâm hồn. Giá: 900k - 1.100k/phòng.",
-=======
-    name: "Lán lá Hạnh Ngộ",
-    description: "Cắm trại lều trong lán, view sông, gắn kết thiên nhiên",
-    image_url: lanLaHanhNgoImage,
-    slug: "lan-la-hanh-ngo",
-  },
-  {
-    name: "Homestay An Yên",
-    description: "Nhà sàn, vách gỗ, mái cọ, view sông dưới tán dừa",
->>>>>>> cf002d2444b7fa3946c60411664b8744480f2a61
     image_url: homestayAnYenImage,
     slug: "homestay-an-yen",
   },
   {
-<<<<<<< HEAD
     name: "Lán lá Hạnh Ngộ",
     description: "Cắm trại lều trong lán, an toàn, tiện lợi, view sông gắn kết đội nhóm. Giá: 480k/lều/1 khách.",
     image_url: lanLaHanhNgoImage,
     slug: "lan-la-hanh-ngo",
-=======
-    name: "Bungalow An Bình",
-    description: "Nhà gỗ độc đáo, view sông, yên tĩnh, sang trọng",
-    image_url: bungalowAnBinhImage,
-    slug: "bungalow-an-binh",
-  },
-  {
-    name: "Nhà Thảnh Thơi",
-    description: "Family hotel, view vườn thoáng mát, 18-20 khách",
-    image_url: nhaThanhThoiImage,
-    slug: "nha-thanh-thoi",
-  },
-  {
-    name: "Nhà An Hòa",
-    description: "Phong cách tân cổ điển, tiện nghi, gần trung tâm",
-    image_url: nhaAnHoaImage,
-    slug: "nha-an-hoa",
-  },
-  {
-    name: "Lều Sê Rê Pôk",
-    description: "Glamping cao cấp, như khách sạn 4 sao, lãng mạn",
-    image_url: leuSerepokImage,
-    slug: "leu-serepok",
->>>>>>> cf002d2444b7fa3946c60411664b8744480f2a61
   },
 ];
 
@@ -480,11 +444,7 @@ const Services = () => {
                     nhớ.
                   </p>
                   <div className="flex items-center gap-3 text-sm text-muted-foreground mb-8">
-<<<<<<< HEAD
-=======
-                    <Sparkles size={18} className="text-accent" />
-                    <span>Giảm đến 30% so với giá lẻ</span>
->>>>>>> cf002d2444b7fa3946c60411664b8744480f2a61
+
                   </div>
                 </motion.div>
 
