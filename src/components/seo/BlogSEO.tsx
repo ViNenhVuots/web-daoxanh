@@ -1,5 +1,7 @@
 import { Helmet } from "react-helmet-async";
 
+const SITE_URL = typeof window !== 'undefined' ? window.location.origin : 'https://daoxanh-web.vercel.app';
+
 interface BlogSEOProps {
   title?: string;
   description?: string;
@@ -22,7 +24,7 @@ export const BlogSEO = ({
   title = "Tin tức & Cảm hứng | Đảo Xanh Ecofarm",
   description = "Khám phá những bài viết về du lịch sinh thái, lối sống xanh và các hoạt động tại Đảo Xanh Ecofarm - Khu nghỉ dưỡng sinh thái hàng đầu Tây Nguyên.",
   image = "/og-blog.jpg",
-  url = "https://daoxanh-ecoo.lovable.app/tin-tuc",
+  url = `${SITE_URL}/tin-tuc`,
   type = "website",
   publishedTime,
   author = "Đảo Xanh Ecofarm",
@@ -40,7 +42,7 @@ export const BlogSEO = ({
       name: "Đảo Xanh Ecofarm",
       logo: {
         "@type": "ImageObject",
-        url: "https://daoxanh-ecoo.lovable.app/logo-dao-xanh.png",
+        url: `${SITE_URL}/LOGO DAO XANH PNG.png`,
       },
     },
     blogPost: posts.map((post) => ({
@@ -53,7 +55,7 @@ export const BlogSEO = ({
         "@type": "Person",
         name: post.author || author,
       },
-      url: `https://daoxanh-ecoo.lovable.app/tin-tuc/${post.slug}`,
+      url: `${SITE_URL}/tin-tuc/${post.slug}`,
     })),
   };
 
@@ -66,7 +68,7 @@ export const BlogSEO = ({
         "@type": "ListItem",
         position: 1,
         name: "Trang chủ",
-        item: "https://daoxanh-ecoo.lovable.app",
+        item: SITE_URL,
       },
       {
         "@type": "ListItem",
@@ -115,3 +117,4 @@ export const BlogSEO = ({
     </Helmet>
   );
 };
+

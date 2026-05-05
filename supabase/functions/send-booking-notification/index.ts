@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const RESEND_API_KEY = process.env.RESEND_API_KEY;
+const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
 
 // Allowed origins for CORS - production and preview domains
 const ALLOWED_ORIGINS = [
@@ -30,36 +30,21 @@ const cleanExpiredEntries = () => {
 // Check rate limit for a given IP
 const checkRateLimit = (clientIp: string): { allowed: boolean; remaining: number; resetIn: number } => {
   cleanExpiredEntries();
-<<<<<<< HEAD
 
   const now = Date.now();
   const record = rateLimitStore.get(clientIp);
 
-=======
-  
-  const now = Date.now();
-  const record = rateLimitStore.get(clientIp);
-  
->>>>>>> cf002d2444b7fa3946c60411664b8744480f2a61
   if (!record || now > record.resetTime) {
     // First request or window expired - create new record
     rateLimitStore.set(clientIp, { count: 1, resetTime: now + RATE_LIMIT_WINDOW_MS });
     return { allowed: true, remaining: MAX_REQUESTS_PER_WINDOW - 1, resetIn: RATE_LIMIT_WINDOW_MS };
   }
-<<<<<<< HEAD
 
-=======
-  
->>>>>>> cf002d2444b7fa3946c60411664b8744480f2a61
   if (record.count >= MAX_REQUESTS_PER_WINDOW) {
     // Rate limit exceeded
     return { allowed: false, remaining: 0, resetIn: record.resetTime - now };
   }
-<<<<<<< HEAD
 
-=======
-  
->>>>>>> cf002d2444b7fa3946c60411664b8744480f2a61
   // Increment counter
   record.count++;
   return { allowed: true, remaining: MAX_REQUESTS_PER_WINDOW - record.count, resetIn: record.resetTime - now };
@@ -198,34 +183,22 @@ const calculateTotalPrice = (bookingData: BookingRequest): number => {
 const handler = async (req: Request): Promise<Response> => {
   const origin = req.headers.get("origin");
   const corsHeaders = getCorsHeaders(origin);
-<<<<<<< HEAD
 
-=======
-  
->>>>>>> cf002d2444b7fa3946c60411664b8744480f2a61
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   // Get client IP for rate limiting
-<<<<<<< HEAD
   const clientIp = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
     req.headers.get("cf-connecting-ip") ||
     "unknown";
 
-=======
-  const clientIp = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || 
-                   req.headers.get("cf-connecting-ip") || 
-                   "unknown";
-  
->>>>>>> cf002d2444b7fa3946c60411664b8744480f2a61
   // Check rate limit
   const rateLimitResult = checkRateLimit(clientIp);
   if (!rateLimitResult.allowed) {
     console.warn(`Rate limit exceeded for IP: ${clientIp}`);
     return new Response(
-<<<<<<< HEAD
       JSON.stringify({
         error: "Quá nhiều yêu cầu. Vui lòng thử lại sau.",
         retryAfter: Math.ceil(rateLimitResult.resetIn / 1000)
@@ -236,18 +209,6 @@ const handler = async (req: Request): Promise<Response> => {
           "Content-Type": "application/json",
           "Retry-After": String(Math.ceil(rateLimitResult.resetIn / 1000)),
           ...corsHeaders
-=======
-      JSON.stringify({ 
-        error: "Quá nhiều yêu cầu. Vui lòng thử lại sau.", 
-        retryAfter: Math.ceil(rateLimitResult.resetIn / 1000) 
-      }),
-      {
-        status: 429,
-        headers: { 
-          "Content-Type": "application/json", 
-          "Retry-After": String(Math.ceil(rateLimitResult.resetIn / 1000)),
-          ...corsHeaders 
->>>>>>> cf002d2444b7fa3946c60411664b8744480f2a61
         },
       }
     );
@@ -255,11 +216,7 @@ const handler = async (req: Request): Promise<Response> => {
 
   try {
     const rawData = await req.json();
-<<<<<<< HEAD
 
-=======
-    
->>>>>>> cf002d2444b7fa3946c60411664b8744480f2a61
     // Check honeypot field - if filled, it's likely a bot
     if (rawData.website && rawData.website.length > 0) {
       console.warn(`Honeypot triggered from IP: ${clientIp}`);
@@ -269,25 +226,15 @@ const handler = async (req: Request): Promise<Response> => {
         headers: { "Content-Type": "application/json", ...corsHeaders },
       });
     }
-<<<<<<< HEAD
 
-=======
-    
->>>>>>> cf002d2444b7fa3946c60411664b8744480f2a61
     // Validate input using zod schema
     const parseResult = bookingSchema.safeParse(rawData);
     if (!parseResult.success) {
       console.error("Validation failed:", parseResult.error.errors);
       return new Response(
-<<<<<<< HEAD
         JSON.stringify({
           error: "Dữ liệu không hợp lệ",
           details: parseResult.error.errors.map((e: any) => e.message)
-=======
-        JSON.stringify({ 
-          error: "Dữ liệu không hợp lệ", 
-          details: parseResult.error.errors.map((e: any) => e.message) 
->>>>>>> cf002d2444b7fa3946c60411664b8744480f2a61
         }),
         {
           status: 400,
@@ -295,11 +242,7 @@ const handler = async (req: Request): Promise<Response> => {
         }
       );
     }
-<<<<<<< HEAD
 
-=======
-    
->>>>>>> cf002d2444b7fa3946c60411664b8744480f2a61
     const bookingData: BookingRequest = parseResult.data;
 
     // Format date for display
@@ -424,15 +367,9 @@ const handler = async (req: Request): Promise<Response> => {
                 </td>
               </tr>
               ${(() => {
-<<<<<<< HEAD
-        const totalPrice = calculateTotalPrice(bookingData);
-        if (totalPrice > 0) {
-          return `
-=======
                 const totalPrice = calculateTotalPrice(bookingData);
                 if (totalPrice > 0) {
                   return `
->>>>>>> cf002d2444b7fa3946c60411664b8744480f2a61
                     <tr style="background-color: #f0fdf4;">
                       <td style="padding: 16px 12px; color: #15803d; font-weight: 600; font-size: 16px;">💰 Tổng tiền</td>
                       <td style="padding: 16px 12px; font-weight: 700; color: #15803d; font-size: 18px;">${formatPrice(totalPrice)}</td>
@@ -443,15 +380,9 @@ const handler = async (req: Request): Promise<Response> => {
                       </td>
                     </tr>
                   `;
-<<<<<<< HEAD
-        }
-        return "";
-      })()}
-=======
                 }
                 return "";
               })()}
->>>>>>> cf002d2444b7fa3946c60411664b8744480f2a61
               ${notesInfo}
             </table>
             
@@ -512,4 +443,4 @@ const handler = async (req: Request): Promise<Response> => {
   }
 };
 
-export default handler;
+Deno.serve(handler);

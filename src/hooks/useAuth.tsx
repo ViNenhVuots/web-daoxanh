@@ -54,36 +54,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const checkAdminRole = async (userId: string) => {
-    // For development/debugging: automatically grant admin status to any authenticated user
-    console.log('Granting admin status to authenticated user:', userId);
-    setIsAdmin(true);
-    
-    // We still call the RPC just to see if there are errors or to keep the logic for future
     try {
-      await supabase.rpc('has_role', {
+      const { data, error } = await supabase.rpc('has_role', {
         _user_id: userId,
         _role: 'admin'
       });
+
+      if (error) {
+        console.error('Error checking admin role:', error);
+        setIsAdmin(false);
+        return;
+      }
+
+      setIsAdmin(!!data);
     } catch (err) {
-      console.warn('Silent admin check error:', err);
+      console.error('Admin check failed:', err);
+      setIsAdmin(false);
     }
   };
 
   const signIn = async (email: string, password: string) => {
-    // Developer bypass for specific admin account
-    const isBypassUser = (email === 'AdminDaoXanh@gmail.com' && (password === 'Admin123@A' || password === 'admin')) ||
-                         (email === 'admin@daoxanh.vn' && password === 'admin123') ||
-                         (email === 'admin_daoxanh@gmail.com' && password === 'daoxanh123@admin');
-
-    if (isBypassUser) {
-      console.log('Using developer bypass for login');
-      setIsAdmin(true);
-      // Mock user for UI purposes
-      setUser({ email: email, id: 'bypass-user' } as any);
-      setLoading(false);
-      return { error: null };
-    }
-
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,

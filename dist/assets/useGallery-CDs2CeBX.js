@@ -1,1 +1,0 @@
-import{u as a}from"./useQuery-pQriiW4v.js";import{x as s}from"./index-C9EdI8nF.js";function u(){return a({queryKey:["gallery-images"],queryFn:async()=>{const{data:r,error:e}=await s.from("gallery_images").select("*").order("display_order",{ascending:!0}).order("created_at",{ascending:!1});if(e)throw e;return r}})}export{u};
