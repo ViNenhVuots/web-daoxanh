@@ -4,25 +4,49 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
+<<<<<<< HEAD
 import { useGalleryImages, GalleryImage } from "@/hooks/useGallery";
 import { Loader2 } from "lucide-react";
 
+=======
+>>>>>>> cf002d2444b7fa3946c60411664b8744480f2a61
 import heroImage from "@/assets/hero-resort.jpg";
 import accommodationImage from "@/assets/accommodation/homestay-an-yen.jpg";
 import activitiesImage from "@/assets/services/ngoai-troi.jpg";
 import cuisineImage from "@/assets/services/am-thuc.jpg";
 import farmImage from "@/assets/services/nong-trai.jpg";
 
+<<<<<<< HEAD
+=======
+const galleryImages = [
+  { src: heroImage, alt: "Toàn cảnh khu nghỉ dưỡng", category: "Cảnh quan" },
+  { src: accommodationImage, alt: "Phòng nghỉ sang trọng", category: "Lưu trú" },
+  { src: activitiesImage, alt: "Kayaking trên hồ", category: "Hoạt động" },
+  { src: cuisineImage, alt: "Ẩm thực địa phương", category: "Ẩm thực" },
+  { src: farmImage, alt: "Trải nghiệm nông trại", category: "Nông trại" },
+  { src: heroImage, alt: "Hoàng hôn tại resort", category: "Cảnh quan" },
+  { src: accommodationImage, alt: "View từ phòng nghỉ", category: "Lưu trú" },
+  { src: activitiesImage, alt: "Team building", category: "Hoạt động" },
+];
+
+>>>>>>> cf002d2444b7fa3946c60411664b8744480f2a61
 const categories = ["Tất cả", "Cảnh quan", "Lưu trú", "Hoạt động", "Ẩm thực", "Nông trại"];
 
 const Gallery = () => {
   const [selectedCategory, setSelectedCategory] = useState("Tất cả");
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
+<<<<<<< HEAD
   const { data: galleryImages, isLoading } = useGalleryImages();
 
   const filteredImages = selectedCategory === "Tất cả"
     ? galleryImages || []
     : (galleryImages || []).filter((img) => img.category === selectedCategory);
+=======
+
+  const filteredImages = selectedCategory === "Tất cả"
+    ? galleryImages
+    : galleryImages.filter((img) => img.category === selectedCategory);
+>>>>>>> cf002d2444b7fa3946c60411664b8744480f2a61
 
   const nextImage = () => {
     if (selectedImage !== null) {
@@ -85,6 +109,7 @@ const Gallery = () => {
         {/* Gallery Grid */}
         <section className="py-16 md:py-20 lg:py-24">
           <div className="container-wide">
+<<<<<<< HEAD
             {isLoading ? (
               <div className="flex justify-center py-20">
                 <Loader2 className="h-10 w-10 animate-spin text-primary" />
@@ -127,6 +152,40 @@ const Gallery = () => {
                 <p className="text-muted-foreground">Chưa có hình ảnh nào trong thư viện này.</p>
               </div>
             )}
+=======
+            <motion.div 
+              layout
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
+            >
+              <AnimatePresence mode="popLayout">
+                {filteredImages.map((image, index) => (
+                  <motion.div
+                    key={`${image.alt}-${index}`}
+                    layout
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    transition={{ duration: 0.5 }}
+                    className="group cursor-pointer"
+                    onClick={() => setSelectedImage(index)}
+                  >
+                    <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-soft hover:shadow-elevated transition-shadow duration-500">
+                      <img
+                        src={image.src}
+                        alt={image.alt}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/40 transition-colors duration-500" />
+                      <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                        <span className="text-xs text-accent uppercase tracking-wider block mb-1">{image.category}</span>
+                        <h3 className="text-primary-foreground font-serif text-lg font-medium">{image.alt}</h3>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </motion.div>
+>>>>>>> cf002d2444b7fa3946c60411664b8744480f2a61
           </div>
         </section>
 

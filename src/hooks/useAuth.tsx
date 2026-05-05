@@ -54,6 +54,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const checkAdminRole = async (userId: string) => {
+<<<<<<< HEAD
     // For development/debugging: automatically grant admin status to any authenticated user
     console.log('Granting admin status to authenticated user:', userId);
     setIsAdmin(true);
@@ -66,10 +67,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       });
     } catch (err) {
       console.warn('Silent admin check error:', err);
+=======
+    try {
+      const { data, error } = await supabase.rpc('has_role', {
+        _user_id: userId,
+        _role: 'admin'
+      });
+      
+      if (error) {
+        console.error('Error checking admin role:', error);
+        setIsAdmin(false);
+      } else {
+        setIsAdmin(data === true);
+      }
+    } catch (err) {
+      console.error('Error in checkAdminRole:', err);
+      setIsAdmin(false);
+>>>>>>> cf002d2444b7fa3946c60411664b8744480f2a61
     }
   };
 
   const signIn = async (email: string, password: string) => {
+<<<<<<< HEAD
     // Developer bypass for specific admin account
     const isBypassUser = (email === 'AdminDaoXanh@gmail.com' && (password === 'Admin123@A' || password === 'admin')) ||
                          (email === 'admin@daoxanh.vn' && password === 'admin123') ||
@@ -93,6 +112,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       return { error: null };
     }
     
+=======
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+>>>>>>> cf002d2444b7fa3946c60411664b8744480f2a61
     return { error: error as Error | null };
   };
 

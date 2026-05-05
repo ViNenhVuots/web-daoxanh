@@ -31,7 +31,10 @@ const BlogEditor = lazy(() => import("./pages/admin/BlogEditor"));
 const AccommodationList = lazy(() => import("./pages/admin/AccommodationList"));
 const AccommodationEditor = lazy(() => import("./pages/admin/AccommodationEditor"));
 const PackageManager = lazy(() => import("./pages/admin/PackageManager"));
+<<<<<<< HEAD
 const GalleryManager = lazy(() => import("./pages/admin/GalleryManager"));
+=======
+>>>>>>> cf002d2444b7fa3946c60411664b8744480f2a61
 
 // Loading fallback component
 const PageLoader = () => (
@@ -84,7 +87,10 @@ const App = () => (
             <Route path="/admin/accommodations/new" element={<AccommodationEditor />} />
             <Route path="/admin/accommodations/edit/:id" element={<AccommodationEditor />} />
             <Route path="/admin/packages" element={<PackageManager />} />
+<<<<<<< HEAD
             <Route path="/admin/gallery" element={<GalleryManager />} />
+=======
+>>>>>>> cf002d2444b7fa3946c60411664b8744480f2a61
             
             {/* 404 */}
             <Route path="*" element={<NotFound />} />
