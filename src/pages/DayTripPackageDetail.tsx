@@ -6,6 +6,7 @@ import { Footer } from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { useDayTripPackageBySlug, useDayTripPackages } from "@/hooks/usePackages";
 import { PageSEO } from "@/components/seo/PageSEO";
+import { staticDayTripPackages } from "./Services";
 
 import farmImage from "@/assets/services/nong-trai.jpg";
 
@@ -30,7 +31,10 @@ const DayTripPackageDetail = () => {
     );
   }
 
-  if (error || !pkg) {
+  const staticPkg = staticDayTripPackages.find(p => p.slug === slug);
+  const activePkg = pkg || staticPkg;
+
+  if (error && !staticPkg || !activePkg) {
     return (
       <div className="min-h-screen bg-background">
         <Navbar />
@@ -48,19 +52,19 @@ const DayTripPackageDetail = () => {
     );
   }
 
-  const otherPackages = allPackages?.filter(p => p.slug !== slug) || [];
+  const otherPackages = allPackages?.filter(p => p.slug !== slug) || staticDayTripPackages.filter(p => p.slug !== slug);
 
   return (
     <>
       <PageSEO
-        title={`${pkg.name} | Đảo Xanh Ecofarm`}
-        description={`Gói trải nghiệm trong ngày ${pkg.name} tại Đảo Xanh Ecofarm - tham quan nông trại, hoạt động ngoài trời thú vị.`}
+        title={`${activePkg.name} | Đảo Xanh Ecofarm`}
+        description={`Gói trải nghiệm trong ngày ${activePkg.name} tại Đảo Xanh Ecofarm - tham quan nông trại, hoạt động ngoài trời thú vị.`}
         url={`/trai-nghiem/${slug}`}
-        keywords={`trải nghiệm nông trại, ${pkg.name}, đảo xanh ecofarm, tour trong ngày`}
+        keywords={`trải nghiệm nông trại, ${activePkg.name}, đảo xanh ecofarm, tour trong ngày`}
         breadcrumbs={[
           { name: "Trang chủ", url: "/" },
           { name: "Dịch vụ", url: "/dich-vu" },
-          { name: pkg.name, url: `/trai-nghiem/${slug}` },
+          { name: activePkg.name, url: `/trai-nghiem/${slug}` },
         ]}
       />
       <div className="min-h-screen bg-background">
@@ -85,7 +89,7 @@ const DayTripPackageDetail = () => {
                     <Tent size={24} className="text-primary" />
                     <span className="label-elegant text-accent">Trải nghiệm trong ngày</span>
                   </div>
-                  <h1 className="heading-hero text-foreground mb-6">{pkg.name}</h1>
+                  <h1 className="heading-hero text-foreground mb-6">{activePkg.name}</h1>
 
                   <div className="flex flex-wrap gap-4 mb-8">
                     <div className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -103,13 +107,13 @@ const DayTripPackageDetail = () => {
                       <div>
                         <span className="text-sm text-muted-foreground">Người lớn</span>
                         <div className="text-3xl font-serif font-bold text-primary">
-                          {formatPrice(pkg.price_adult)}đ
+                          {formatPrice(activePkg.price_adult)}đ
                         </div>
                       </div>
                       <div className="pb-1">
                         <span className="text-sm text-muted-foreground">Trẻ em</span>
                         <div className="text-xl font-semibold text-foreground">
-                          {formatPrice(pkg.price_child || 0)}đ
+                          {formatPrice(activePkg.price_child || 0)}đ
                         </div>
                       </div>
                     </div>
@@ -129,8 +133,8 @@ const DayTripPackageDetail = () => {
                 >
                   <div className="rounded-3xl overflow-hidden shadow-elevated">
                     <img 
-                      src={pkg.image_url || farmImage} 
-                      alt={pkg.name}
+                      src={activePkg.img_url || farmImage} 
+                      alt={activePkg.name}
                       className="w-full h-[400px] lg:h-[500px] object-cover"
                       onError={(e) => {
                         (e.target as HTMLImageElement).src = farmImage;
@@ -150,7 +154,7 @@ const DayTripPackageDetail = () => {
                   Gói bao gồm
                 </h2>
                 <div className="grid sm:grid-cols-2 gap-4">
-                  {pkg.includes.map((item, index) => (
+                  {activePkg.includes.map((item, index) => (
                     <motion.div
                       key={item}
                       initial={{ opacity: 0, y: 20 }}

@@ -6,6 +6,7 @@ import { Footer } from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { useComboPackageBySlug, useComboPackages } from "@/hooks/usePackages";
 import { PageSEO } from "@/components/seo/PageSEO";
+import { staticComboPackages } from "./Services";
 
 import accommodationImage from "@/assets/services/nghi-duong.jpg";
 
@@ -30,7 +31,10 @@ const ComboPackageDetail = () => {
     );
   }
 
-  if (error || !pkg) {
+  const staticPkg = staticComboPackages.find(p => p.slug === slug);
+  const activePkg = pkg || staticPkg;
+
+  if (error && !staticPkg || !activePkg) {
     return (
       <div className="min-h-screen bg-background">
         <Navbar />
@@ -48,19 +52,19 @@ const ComboPackageDetail = () => {
     );
   }
 
-  const otherPackages = allPackages?.filter(p => p.slug !== slug) || [];
+  const otherPackages = allPackages?.filter(p => p.slug !== slug) || staticComboPackages.filter(p => p.slug !== slug);
 
   return (
     <>
       <PageSEO
-        title={`${pkg.name} - Combo 2 Ngày 1 Đêm | Đảo Xanh Ecofarm`}
-        description={pkg.subtitle || `Gói combo nghỉ dưỡng ${pkg.name} tại Đảo Xanh Ecofarm với đầy đủ tiện nghi và trải nghiệm nông trại.`}
+        title={`${activePkg.name} - Combo 2 Ngày 1 Đêm | Đảo Xanh Ecofarm`}
+        description={activePkg.subtitle || `Gói combo nghỉ dưỡng ${activePkg.name} tại Đảo Xanh Ecofarm với đầy đủ tiện nghi và trải nghiệm nông trại.`}
         url={`/combo/${slug}`}
-        keywords={`combo nghỉ dưỡng, ${pkg.name}, đảo xanh ecofarm, 2 ngày 1 đêm`}
+        keywords={`combo nghỉ dưỡng, ${activePkg.name}, đảo xanh ecofarm, 2 ngày 1 đêm`}
         breadcrumbs={[
           { name: "Trang chủ", url: "/" },
           { name: "Dịch vụ", url: "/dich-vu" },
-          { name: pkg.name, url: `/combo/${slug}` },
+          { name: activePkg.name, url: `/combo/${slug}` },
         ]}
       />
       <div className="min-h-screen bg-background">
@@ -85,8 +89,8 @@ const ComboPackageDetail = () => {
                     <Package size={24} className="text-primary" />
                     <span className="label-elegant text-accent">Combo 2 ngày 1 đêm</span>
                   </div>
-                  <h1 className="heading-hero text-foreground mb-4">{pkg.name}</h1>
-                  <p className="body-large text-muted-foreground mb-8">{pkg.subtitle}</p>
+                  <h1 className="heading-hero text-foreground mb-4">{activePkg.name}</h1>
+                  <p className="body-large text-muted-foreground mb-8">{activePkg.subtitle}</p>
 
                   <div className="flex flex-wrap gap-4 mb-8">
                     <div className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -104,13 +108,13 @@ const ComboPackageDetail = () => {
                       <div>
                         <span className="text-sm text-muted-foreground">Người lớn</span>
                         <div className="text-3xl font-serif font-bold text-primary">
-                          {formatPrice(pkg.price_adult)}đ
+                          {formatPrice(activePkg.price_adult)}đ
                         </div>
                       </div>
                       <div className="pb-1">
                         <span className="text-sm text-muted-foreground">Trẻ em</span>
                         <div className="text-xl font-semibold text-foreground">
-                          {formatPrice(pkg.price_child || 0)}đ
+                          {formatPrice(activePkg.price_child || 0)}đ
                         </div>
                       </div>
                     </div>
@@ -130,8 +134,8 @@ const ComboPackageDetail = () => {
                 >
                   <div className="rounded-3xl overflow-hidden shadow-elevated">
                     <img 
-                      src={pkg.image_url || accommodationImage} 
-                      alt={pkg.name}
+                      src={activePkg.img_url || accommodationImage} 
+                      alt={activePkg.name}
                       className="w-full h-[400px] lg:h-[500px] object-cover"
                       onError={(e) => {
                         (e.target as HTMLImageElement).src = accommodationImage;
@@ -151,7 +155,7 @@ const ComboPackageDetail = () => {
                   Gói bao gồm
                 </h2>
                 <div className="grid sm:grid-cols-2 gap-4">
-                  {pkg.includes.map((item, index) => (
+                  {activePkg.includes.map((item, index) => (
                     <motion.div
                       key={item}
                       initial={{ opacity: 0, y: 20 }}

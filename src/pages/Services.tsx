@@ -35,7 +35,7 @@ import nhaAnHoaImage from "@/assets/accommodation/nha-an-hoa.jpg";
 import leuSerepokImage from "@/assets/accommodation/leu-serepok.jpg";
 
 // Static fallback data
-const staticAccommodations = [
+export const staticAccommodations = [
   {
     name: "Lán lá Hạnh Ngộ",
     description: "Nhà sàn bên bờ sông Serepok thơ mộng, gần gũi, hòa mình vào thiên nhiên.",
@@ -74,7 +74,7 @@ const staticAccommodations = [
   },
 ];
 
-const staticComboPackages = [
+export const staticComboPackages = [
   {
     name: "Gói A",
     slug: "goi-a",
@@ -121,7 +121,7 @@ const staticComboPackages = [
   },
 ];
 
-const staticDayTripPackages = [
+export const staticDayTripPackages = [
   {
     name: "Gói A - Nông trại tiêu chuẩn",
     slug: "goi-a-nong-trai-tieu-chuan",
