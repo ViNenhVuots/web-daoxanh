@@ -619,6 +619,8 @@ function PackageDialog({ type, package: pkg, isOpen, setIsOpen, queryClient, toa
                 id="pkg-price-adult"
                 type="number"
                 min="0"
+                className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                onWheel={(e) => (e.target as HTMLElement).blur()}
                 value={formData.price_adult}
                 onChange={(e) => setFormData((prev) => ({ 
                   ...prev, 
@@ -632,6 +634,8 @@ function PackageDialog({ type, package: pkg, isOpen, setIsOpen, queryClient, toa
                 id="pkg-price-child"
                 type="number"
                 min="0"
+                className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                onWheel={(e) => (e.target as HTMLElement).blur()}
                 value={formData.price_child}
                 onChange={(e) => setFormData((prev) => ({ 
                   ...prev, 
