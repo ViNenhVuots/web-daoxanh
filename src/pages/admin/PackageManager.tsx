@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import AdminLayout from '@/components/admin/AdminLayout';
@@ -542,20 +542,34 @@ function PackageDialog({ type, package: pkg, isOpen, setIsOpen, queryClient, toa
   };
 
   // Update form when package changes
-  useState(() => {
-    if (pkg) {
-      setFormData({
-        name: pkg.name || '',
-        subtitle: pkg.subtitle || '',
-        price_adult: pkg.price_adult || 0,
-        price_child: pkg.price_child || 0,
-        includes: pkg.includes || [],
-        image_url: pkg.image_url || '',
-        display_order: pkg.display_order || 0,
-        published: pkg.published ?? true,
-      });
+  useEffect(() => {
+    if (isOpen) {
+      if (pkg) {
+        setFormData({
+          name: pkg.name || '',
+          subtitle: pkg.subtitle || '',
+          price_adult: pkg.price_adult || 0,
+          price_child: pkg.price_child || 0,
+          includes: pkg.includes || [],
+          image_url: pkg.image_url || '',
+          display_order: pkg.display_order || 0,
+          published: pkg.published ?? true,
+        });
+      } else {
+        setFormData({
+          name: '',
+          subtitle: '',
+          price_adult: 0,
+          price_child: 0,
+          includes: [],
+          image_url: '',
+          display_order: 0,
+          published: true,
+        });
+        setNewInclude('');
+      }
     }
-  });
+  }, [pkg, isOpen]);
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
