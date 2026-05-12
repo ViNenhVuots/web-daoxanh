@@ -133,8 +133,8 @@ const ComboPackageDetail = () => {
                   transition={{ duration: 0.8, delay: 0.2 }}
                 >
                   <div className="rounded-3xl overflow-hidden shadow-elevated">
-                    <img 
-                      src={activePkg.img_url || accommodationImage} 
+                    <img
+                      src={activePkg.img_url || accommodationImage}
                       alt={activePkg.name}
                       className="w-full h-[400px] lg:h-[500px] object-cover"
                       onError={(e) => {
