@@ -110,12 +110,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const signOut = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (error) {
-      console.error('Global signout failed, forcing local signout:', error);
-      await supabase.auth.signOut({ scope: 'local' });
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+    } catch (error) {
+      console.error('Signout failed, forcing local cleanup:', error);
+      
+      // Bắt buộc xóa token khỏi bộ nhớ trình duyệt nếu API bị lỗi 500
+      const keys = Object.keys(localStorage);
+      for (const key of keys) {
+        if (key.startsWith('sb-')) {
+          localStorage.removeItem(key);
+        }
+      }
+      
+      // Cập nhật lại state và tải lại trang
+      setSession(null);
+      setUser(null);
+      window.location.href = '/admin';
+    } finally {
+      setIsAdmin(false);
     }
-    setIsAdmin(false);
   };
 
   return (
