@@ -1,9 +1,13 @@
 
 -- Create app_role enum for role-based access control
-CREATE TYPE public.app_role AS ENUM ('admin', 'moderator', 'user');
+DO $$ BEGIN
+    CREATE TYPE public.app_role AS ENUM ('admin', 'moderator', 'user');
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
 
 -- Create user_roles table for admin access control
-CREATE TABLE public.user_roles (
+CREATE TABLE IF NOT EXISTS public.user_roles (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE NOT NULL,
     role app_role NOT NULL,
@@ -26,7 +30,7 @@ AS $$
     SELECT 1
     FROM public.user_roles
     WHERE user_id = _user_id
-      AND role = _role
+      AND role::text = _role::text
   )
 $$;
 
@@ -45,7 +49,7 @@ USING (public.has_role(auth.uid(), 'admin'))
 WITH CHECK (public.has_role(auth.uid(), 'admin'));
 
 -- Create blog_posts table
-CREATE TABLE public.blog_posts (
+CREATE TABLE IF NOT EXISTS public.blog_posts (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     slug TEXT UNIQUE NOT NULL,
     title TEXT NOT NULL,
@@ -96,7 +100,7 @@ TO authenticated
 USING (public.has_role(auth.uid(), 'admin'));
 
 -- Create accommodations table
-CREATE TABLE public.accommodations (
+CREATE TABLE IF NOT EXISTS public.accommodations (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     slug TEXT UNIQUE NOT NULL,
     name TEXT NOT NULL,
@@ -153,7 +157,7 @@ TO authenticated
 USING (public.has_role(auth.uid(), 'admin'));
 
 -- Create combo_packages table
-CREATE TABLE public.combo_packages (
+CREATE TABLE IF NOT EXISTS public.combo_packages (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     slug TEXT UNIQUE NOT NULL,
     name TEXT NOT NULL,
@@ -202,7 +206,7 @@ TO authenticated
 USING (public.has_role(auth.uid(), 'admin'));
 
 -- Create day_trip_packages table
-CREATE TABLE public.day_trip_packages (
+CREATE TABLE IF NOT EXISTS public.day_trip_packages (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     slug TEXT UNIQUE NOT NULL,
     name TEXT NOT NULL,
@@ -370,7 +374,9 @@ FOR EACH ROW
 EXECUTE FUNCTION public.update_updated_at_column();
 
 -- Create storage bucket for content images
-INSERT INTO storage.buckets (id, name, public) VALUES ('content-images', 'content-images', true);
+INSERT INTO storage.buckets (id, name, public) 
+VALUES ('content-images', 'content-images', true)
+ON CONFLICT (id) DO UPDATE SET public = EXCLUDED.public;
 
 -- Storage policies for content-images bucket
 CREATE POLICY "Anyone can view content images"
