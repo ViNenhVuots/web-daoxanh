@@ -254,9 +254,13 @@ function AdminLoginForm() {
 }
 
 export default function AdminLayout({ children }: AdminLayoutProps) {
-  const { user, loading, isAdmin, signOut } = useAuth();
+  const { user, loading, isAdmin, isAdminLoading, signOut } = useAuth();
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const handleSignOut = async () => {
+    await signOut();
+  };
 
   if (loading) {
     return (
@@ -272,7 +276,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
   }
 
   // Show loading while checking admin status
-  if (!isAdmin) {
+  if (isAdminLoading) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-background gap-4">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
@@ -281,9 +285,23 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     );
   }
 
-  const handleSignOut = async () => {
-    await signOut();
-  };
+  // If check is complete and they are not an admin
+  if (!isAdmin) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-background gap-4 p-4 text-center">
+        <div className="w-16 h-16 bg-destructive/10 rounded-full flex items-center justify-center mb-4">
+          <X className="h-8 w-8 text-destructive" />
+        </div>
+        <h2 className="text-2xl font-bold">Không có quyền truy cập</h2>
+        <p className="text-muted-foreground max-w-md">
+          Tài khoản của bạn không có quyền quản trị viên. Vui lòng liên hệ với người quản trị để được cấp quyền.
+        </p>
+        <Button onClick={handleSignOut} className="mt-4">
+          <LogOut className="mr-2 h-4 w-4" /> Đăng xuất
+        </Button>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-muted/30">

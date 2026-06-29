@@ -7,6 +7,7 @@ interface AuthContextType {
   session: Session | null;
   loading: boolean;
   isAdmin: boolean;
+  isAdminLoading: boolean;
   signIn: (email: string, password: string) => Promise<{ error: Error | null }>;
   signUp: (email: string, password: string) => Promise<{ error: Error | null }>;
   signOut: () => Promise<void>;
@@ -19,6 +20,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdminLoading, setIsAdminLoading] = useState(false);
 
   useEffect(() => {
     // Set up auth state listener FIRST
@@ -30,11 +32,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
         // Defer role check with setTimeout to prevent deadlock
         if (session?.user) {
+          setIsAdminLoading(true);
           setTimeout(() => {
             checkAdminRole(session.user.id);
           }, 0);
         } else {
           setIsAdmin(false);
+          setIsAdminLoading(false);
         }
       }
     );
@@ -46,7 +50,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setLoading(false);
 
       if (session?.user) {
+        setIsAdminLoading(true);
         checkAdminRole(session.user.id);
+      } else {
+        setIsAdminLoading(false);
       }
     });
 
@@ -70,6 +77,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     } catch (err) {
       console.error('Admin check failed:', err);
       setIsAdmin(false);
+    } finally {
+      setIsAdminLoading(false);
     }
   };
 
@@ -109,6 +118,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       session,
       loading,
       isAdmin,
+      isAdminLoading,
       signIn,
       signUp,
       signOut
