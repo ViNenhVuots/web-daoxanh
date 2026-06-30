@@ -81,6 +81,7 @@ export const staticComboPackages = [
     subtitle: "Cắm trại glambing lều đơn tại lán lá Hạnh Ngộ",
     price_adult: 699000,
     price_child: 599000,
+    note: "Áp dụng từ 4 khách trở lên",
     includes: [
       "Trải nghiệm nông trại cao cấp",
       "Hồ bơi resort",
@@ -151,6 +152,7 @@ export const staticDayTripPackages = [
     slug: "goi-a-bbq-nong-trai-tieu-chuan",
     price_adult: 319000,
     price_child: 279000,
+    note: "Áp dụng từ 4 khách trở lên",
     includes: [
       "Gói A",
       "Thoải mái tham quan vui chơi",
@@ -199,6 +201,7 @@ export const staticDayTripPackages = [
     slug: "set-bbq-lau-nuong",
     price_adult: 225000,
     price_child: 225000,
+    note: "Áp dụng từ 4 khách trở lên",
     includes: [
       "Thưởng thức set BBQ lẩu nướng đặc sắc tại nhà hàng",
       "Không gian thoáng đãng bên bờ sông"
@@ -209,6 +212,7 @@ export const staticDayTripPackages = [
     slug: "cano-the-thao-mat-nuoc",
     price_adult: 120000,
     price_child: 120000,
+    note: "Áp dụng từ 6 khách trở lên",
     includes: [
       "Cano sinh thái tốc độ cao hoặc các môn thể thao mặt nước",
       "Áp dụng từ 6 khách trở lên"
@@ -576,6 +580,12 @@ const Services = () => {
                         </div>
                       </div>
 
+                      {pkg.note && (
+                        <div className="mt-4 p-3 bg-primary/5 rounded-lg border border-primary/20 text-center">
+                          <span className="text-sm font-medium text-primary uppercase">{pkg.note}</span>
+                        </div>
+                      )}
+
                       <div className="mt-6 flex gap-2">
                         {pkg.slug && (
                           <Link to={`/combo/${pkg.slug}`} className="flex-1">
@@ -689,6 +699,11 @@ const Services = () => {
                               </span>
                             ))}
                           </div>
+                          {pkg.note && (
+                            <div className="mt-3 text-xs font-semibold text-primary/80 uppercase">
+                              * {pkg.note}
+                            </div>
+                          )}
                         </Link>
                       ))}
                     </div>

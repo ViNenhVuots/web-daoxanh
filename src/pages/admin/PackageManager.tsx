@@ -69,6 +69,7 @@ interface ComboPackage {
   price_child: number | null;
   includes: string[];
   image_url: string | null;
+  note: string | null;
   display_order: number;
   published: boolean;
 }
@@ -81,6 +82,7 @@ interface DayTripPackage {
   price_child: number | null;
   includes: string[];
   image_url: string | null;
+  note: string | null;
   display_order: number;
   published: boolean;
 }
@@ -470,6 +472,7 @@ function PackageDialog({ type, package: pkg, isOpen, setIsOpen, queryClient, toa
     price_child: pkg?.price_child || 0,
     includes: pkg?.includes || [],
     image_url: pkg?.image_url || '',
+    note: pkg?.note || '',
     display_order: pkg?.display_order || 0,
     published: pkg?.published ?? true,
   });
@@ -486,6 +489,7 @@ function PackageDialog({ type, package: pkg, isOpen, setIsOpen, queryClient, toa
         price_child: formData.price_child || null,
         includes: formData.includes,
         image_url: formData.image_url,
+        note: formData.note || null,
         display_order: formData.display_order,
         published: formData.published,
         ...(type === 'combo' ? { subtitle: formData.subtitle || null } : {}),
@@ -518,6 +522,7 @@ function PackageDialog({ type, package: pkg, isOpen, setIsOpen, queryClient, toa
       price_child: 0,
       includes: [],
       image_url: '',
+      note: '',
       display_order: 0,
       published: true,
     });
@@ -552,6 +557,7 @@ function PackageDialog({ type, package: pkg, isOpen, setIsOpen, queryClient, toa
           price_child: pkg.price_child || 0,
           includes: pkg.includes || [],
           image_url: pkg.image_url || '',
+          note: pkg.note || '',
           display_order: pkg.display_order || 0,
           published: pkg.published ?? true,
         });
@@ -563,6 +569,7 @@ function PackageDialog({ type, package: pkg, isOpen, setIsOpen, queryClient, toa
           price_child: 0,
           includes: [],
           image_url: '',
+          note: '',
           display_order: 0,
           published: true,
         });
@@ -612,6 +619,15 @@ function PackageDialog({ type, package: pkg, isOpen, setIsOpen, queryClient, toa
               />
             </div>
           )}
+          <div className="space-y-2">
+            <Label htmlFor="pkg-note">Ghi chú</Label>
+            <Input
+              id="pkg-note"
+              value={formData.note}
+              onChange={(e) => setFormData((prev) => ({ ...prev, note: e.target.value }))}
+              placeholder="VD: Áp dụng từ 4 khách trở lên"
+            />
+          </div>
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="pkg-price-adult">Giá người lớn (VNĐ)</Label>
