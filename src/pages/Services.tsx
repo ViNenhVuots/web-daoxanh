@@ -420,7 +420,7 @@ const Services = () => {
                     Lưu trú
                   </span>
                   <h2 className="heading-section text-foreground mb-6">
-                    6 loại{" "}
+                    {accommodations.length} loại{" "}
                     <span className="italic text-primary">lưu trú đặc sắc</span>
                   </h2>
                   <p className="body-regular text-muted-foreground max-w-2xl mx-auto">
@@ -496,7 +496,7 @@ const Services = () => {
                     Combo 2 ngày 1 đêm
                   </span>
                   <h2 className="heading-section text-foreground mb-8">
-                    3 gói combo{" "}
+                    {comboPackages.length} gói combo{" "}
                     <span className="italic text-primary">nghỉ dưỡng</span>
                   </h2>
                   <p className="body-regular text-muted-foreground mb-8 leading-relaxed">
