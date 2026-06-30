@@ -147,6 +147,17 @@ export const staticDayTripPackages = [
     ],
   },
   {
+    name: "Gói A + BBQ lẩu nướng - Nông trại tiêu chuẩn",
+    slug: "goi-a-bbq-nong-trai-tieu-chuan",
+    price_adult: 319000,
+    price_child: 279000,
+    includes: [
+      "Gói A",
+      "Thoải mái tham quan vui chơi",
+      "BBQ lẩu nướng"
+    ],
+  },
+  {
     name: "Gói A1 + BBQ lẩu nướng - Nông trại 5 sao",
     slug: "goi-a1-bbq-nong-trai-5-sao",
     price_adult: 409000,
@@ -181,6 +192,26 @@ export const staticDayTripPackages = [
       "Tour Cano sinh thái cao tốc",
       "Chưa bao gồm vé hồ bơi resort",
       "BBQ lẩu nướng"
+    ],
+  },
+  {
+    name: "Set BBQ - Lẩu Nướng",
+    slug: "set-bbq-lau-nuong",
+    price_adult: 225000,
+    price_child: 225000,
+    includes: [
+      "Thưởng thức set BBQ lẩu nướng đặc sắc tại nhà hàng",
+      "Không gian thoáng đãng bên bờ sông"
+    ],
+  },
+  {
+    name: "Cano / Thể thao mặt nước",
+    slug: "cano-the-thao-mat-nuoc",
+    price_adult: 120000,
+    price_child: 120000,
+    includes: [
+      "Cano sinh thái tốc độ cao hoặc các môn thể thao mặt nước",
+      "Áp dụng từ 6 khách trở lên"
     ],
   },
 ];
