@@ -12,6 +12,12 @@ export interface Accommodation {
   capacity: string | null;
   price_original: number | null;
   price_discounted: number | null;
+  price_day: number | null;
+  price_3_guests: number | null;
+  price_4_guests: number | null;
+  price_5_guests: number | null;
+  surcharge_adult: number | null;
+  surcharge_child: number | null;
   unit: string | null;
   amenities: string[];
   highlights: string[];

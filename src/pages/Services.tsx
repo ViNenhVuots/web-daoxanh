@@ -79,8 +79,8 @@ export const staticComboPackages = [
     name: "Gói A",
     slug: "goi-a",
     subtitle: "Cắm trại glambing lều đơn tại lán lá Hạnh Ngộ",
-    price_adult: 649000,
-    price_child: 449000,
+    price_adult: 699000,
+    price_child: 599000,
     includes: [
       "Trải nghiệm nông trại cao cấp",
       "Hồ bơi resort",
@@ -97,8 +97,8 @@ export const staticComboPackages = [
     name: "Gói A1",
     slug: "goi-a1",
     subtitle: "Tùy chọn lưu trú",
-    price_adult: 749000,
-    price_child: 549000,
+    price_adult: 849000,
+    price_child: 719000,
     includes: [
       "Bao gồm các dịch vụ của Gói A",
       "Tùy chọn lưu trú: Nhà Thảnh Thơi, Homestay An Yên, Phòng khách sạn An Hòa, Lều SêRêPôk"
@@ -109,8 +109,8 @@ export const staticComboPackages = [
     name: "Gói A2",
     slug: "goi-a2",
     subtitle: "Nghỉ dưỡng cao cấp",
-    price_adult: 1049000,
-    price_child: 849000,
+    price_adult: 1149000,
+    price_child: 999000,
     includes: [
       "Trải nghiệm tất cả các dịch vụ",
       "Thể thao mặt nước",
@@ -126,7 +126,7 @@ export const staticDayTripPackages = [
     name: "Gói A - Nông trại tiêu chuẩn",
     slug: "goi-a-nong-trai-tieu-chuan",
     price_adult: 120000,
-    price_child: 0,
+    price_child: 85000,
     includes: [
       "Thoải mái tham quan vui chơi",
       "Sân cỏ thiếu nhi - thanh niên",
@@ -138,8 +138,8 @@ export const staticDayTripPackages = [
   {
     name: "Gói A1 - Nông trại 5 sao",
     slug: "goi-a1-nong-trai-5-sao",
-    price_adult: 195000,
-    price_child: 0,
+    price_adult: 215000,
+    price_child: 180000,
     includes: [
       "Gói A",
       "Thể thao mặt nước (Chèo thuyền, chèo Súp, cầu Lắc, đu dây Zipline)",
@@ -149,8 +149,8 @@ export const staticDayTripPackages = [
   {
     name: "Gói A1 + BBQ lẩu nướng - Nông trại 5 sao",
     slug: "goi-a1-bbq-nong-trai-5-sao",
-    price_adult: 369000,
-    price_child: 0,
+    price_adult: 409000,
+    price_child: 379000,
     includes: [
       "Gói A",
       "Thể thao mặt nước (Chèo thuyền, chèo Súp, cầu Lắc, đu dây Zipline)",
@@ -161,8 +161,8 @@ export const staticDayTripPackages = [
   {
     name: "Gói A2 - Nông trại 5 sao+",
     slug: "goi-a2-nong-trai-5-sao-plus",
-    price_adult: 270000,
-    price_child: 0,
+    price_adult: 310000,
+    price_child: 275000,
     includes: [
       "Trải nghiệm tất cả các dịch vụ",
       "Thể thao mặt nước",
@@ -173,8 +173,8 @@ export const staticDayTripPackages = [
   {
     name: "Gói A2 + BBQ lẩu nướng - Nông trại 5 sao+",
     slug: "goi-a2-bbq-nong-trai-5-sao-plus",
-    price_adult: 449000,
-    price_child: 0,
+    price_adult: 499000,
+    price_child: 469000,
     includes: [
       "Trải nghiệm tất cả các dịch vụ",
       "Thể thao mặt nước",

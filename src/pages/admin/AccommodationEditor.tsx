@@ -24,6 +24,12 @@ const accommodationSchema = z.object({
   image_url: z.string().url().optional().or(z.literal('')),
   capacity: z.string().max(100).optional(),
   price_original: z.number().min(0).optional(),
+  price_day: z.number().min(0).optional().nullable(),
+  price_3_guests: z.number().min(0).optional().nullable(),
+  price_4_guests: z.number().min(0).optional().nullable(),
+  price_5_guests: z.number().min(0).optional().nullable(),
+  surcharge_adult: z.number().min(0).optional().nullable(),
+  surcharge_child: z.number().min(0).optional().nullable(),
 
   unit: z.string().max(50).optional(),
   location: z.string().max(200).optional(),
@@ -52,6 +58,12 @@ export default function AccommodationEditor() {
     image_url: '',
     capacity: '',
     price_original: 0,
+    price_day: 0,
+    price_3_guests: 0,
+    price_4_guests: 0,
+    price_5_guests: 0,
+    surcharge_adult: 0,
+    surcharge_child: 0,
 
     unit: 'đêm',
     location: 'Đảo Xanh Ecofarm',
@@ -92,6 +104,12 @@ export default function AccommodationEditor() {
         image_url: existingData.image_url || '',
         capacity: existingData.capacity || '',
         price_original: existingData.price_original || 0,
+        price_day: existingData.price_day || 0,
+        price_3_guests: existingData.price_3_guests || 0,
+        price_4_guests: existingData.price_4_guests || 0,
+        price_5_guests: existingData.price_5_guests || 0,
+        surcharge_adult: existingData.surcharge_adult || 0,
+        surcharge_child: existingData.surcharge_child || 0,
 
         unit: existingData.unit || 'đêm',
         location: existingData.location || 'Đảo Xanh Ecofarm',
@@ -171,6 +189,12 @@ export default function AccommodationEditor() {
         capacity: data.capacity || null,
         price_original: data.price_original,
         price_discounted: data.price_original,
+        price_day: data.price_day || null,
+        price_3_guests: data.price_3_guests || null,
+        price_4_guests: data.price_4_guests || null,
+        price_5_guests: data.price_5_guests || null,
+        surcharge_adult: data.surcharge_adult || null,
+        surcharge_child: data.surcharge_child || null,
         unit: data.unit || null,
         location: data.location || null,
         rating: data.rating,
@@ -492,17 +516,84 @@ export default function AccommodationEditor() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="price_original">Giá (VNĐ)</Label>
+                  <Label htmlFor="price_original">Giá 2 Khách / Gốc (VNĐ)</Label>
                   <Input
                     id="price_original"
                     type="number"
                     min="0"
-                    value={formData.price_original}
+                    value={formData.price_original || ''}
                     onChange={(e) => setFormData((prev) => ({ 
                       ...prev, 
                       price_original: parseInt(e.target.value) || 0 
                     }))}
                   />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="price_day">Giá Ngày (VNĐ)</Label>
+                  <Input
+                    id="price_day"
+                    type="number"
+                    min="0"
+                    value={formData.price_day || ''}
+                    onChange={(e) => setFormData((prev) => ({ 
+                      ...prev, 
+                      price_day: parseInt(e.target.value) || 0 
+                    }))}
+                  />
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="price_3_guests">Giá 3 Khách</Label>
+                    <Input
+                      id="price_3_guests"
+                      type="number"
+                      min="0"
+                      value={formData.price_3_guests || ''}
+                      onChange={(e) => setFormData((prev) => ({ ...prev, price_3_guests: parseInt(e.target.value) || 0 }))}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="price_4_guests">Giá 4 Khách</Label>
+                    <Input
+                      id="price_4_guests"
+                      type="number"
+                      min="0"
+                      value={formData.price_4_guests || ''}
+                      onChange={(e) => setFormData((prev) => ({ ...prev, price_4_guests: parseInt(e.target.value) || 0 }))}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="price_5_guests">Giá 5 Khách</Label>
+                    <Input
+                      id="price_5_guests"
+                      type="number"
+                      min="0"
+                      value={formData.price_5_guests || ''}
+                      onChange={(e) => setFormData((prev) => ({ ...prev, price_5_guests: parseInt(e.target.value) || 0 }))}
+                    />
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="surcharge_adult">Phụ thu Ghép NL</Label>
+                    <Input
+                      id="surcharge_adult"
+                      type="number"
+                      min="0"
+                      value={formData.surcharge_adult || ''}
+                      onChange={(e) => setFormData((prev) => ({ ...prev, surcharge_adult: parseInt(e.target.value) || 0 }))}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="surcharge_child">Phụ thu Ghép TE</Label>
+                    <Input
+                      id="surcharge_child"
+                      type="number"
+                      min="0"
+                      value={formData.surcharge_child || ''}
+                      onChange={(e) => setFormData((prev) => ({ ...prev, surcharge_child: parseInt(e.target.value) || 0 }))}
+                    />
+                  </div>
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="unit">Đơn vị</Label>

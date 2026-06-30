@@ -439,14 +439,60 @@ const ArticleDetail = () => {
                   className="sticky top-28"
                 >
                   <div className="bg-card rounded-2xl p-8 shadow-elevated border border-border/50">
-                    <div className="text-center mb-6">
+                    <div className="text-center mb-6 border-b border-border/50 pb-6">
                       <div className="text-3xl font-bold text-primary">
                         {formatPrice(article.price_original || 0)}đ
                       </div>
                       <p className="text-muted-foreground text-sm mt-1">
-                        / {article.unit}
+                        / {article.unit || 'đêm'} (Giá 2 khách)
                       </p>
                     </div>
+
+                    {(article.price_day || article.price_3_guests || article.price_4_guests || article.price_5_guests || article.surcharge_adult || article.surcharge_child) && (
+                      <div className="space-y-3 mb-6 bg-muted/30 p-4 rounded-xl text-sm">
+                        <h4 className="font-semibold text-foreground mb-2">Bảng giá chi tiết</h4>
+                        {article.price_day ? (
+                          <div className="flex justify-between">
+                            <span className="text-muted-foreground">Giá theo ngày:</span>
+                            <span className="font-medium text-foreground">{formatPrice(article.price_day)}đ</span>
+                          </div>
+                        ) : null}
+                        {article.price_3_guests ? (
+                          <div className="flex justify-between">
+                            <span className="text-muted-foreground">Giá 3 khách:</span>
+                            <span className="font-medium text-foreground">{formatPrice(article.price_3_guests)}đ</span>
+                          </div>
+                        ) : null}
+                        {article.price_4_guests ? (
+                          <div className="flex justify-between">
+                            <span className="text-muted-foreground">Giá 4 khách:</span>
+                            <span className="font-medium text-foreground">{formatPrice(article.price_4_guests)}đ</span>
+                          </div>
+                        ) : null}
+                        {article.price_5_guests ? (
+                          <div className="flex justify-between">
+                            <span className="text-muted-foreground">Giá 5 khách:</span>
+                            <span className="font-medium text-foreground">{formatPrice(article.price_5_guests)}đ</span>
+                          </div>
+                        ) : null}
+                        {article.surcharge_adult || article.surcharge_child ? (
+                          <div className="pt-2 mt-2 border-t border-border/50">
+                            {article.surcharge_adult ? (
+                              <div className="flex justify-between mt-1">
+                                <span className="text-muted-foreground">Ghép Người lớn:</span>
+                                <span className="font-medium text-primary">+{formatPrice(article.surcharge_adult)}đ</span>
+                              </div>
+                            ) : null}
+                            {article.surcharge_child ? (
+                              <div className="flex justify-between mt-1">
+                                <span className="text-muted-foreground">Ghép Trẻ em:</span>
+                                <span className="font-medium text-primary">+{formatPrice(article.surcharge_child)}đ</span>
+                              </div>
+                            ) : null}
+                          </div>
+                        ) : null}
+                      </div>
+                    )}
 
                     <div className="space-y-3 mb-8">
                       <div className="flex items-center justify-between text-sm">
