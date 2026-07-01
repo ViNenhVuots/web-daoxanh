@@ -9,6 +9,7 @@ export interface Accommodation {
   description: string | null;
   long_description: string | null;
   image_url: string | null;
+  gallery: string[] | null;
   capacity: string | null;
   price_original: number | null;
   price_discounted: number | null;

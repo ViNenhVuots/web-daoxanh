@@ -13,6 +13,7 @@ import { useToast } from '@/hooks/use-toast';
 import { ArrowLeft, Loader2, Save, Eye, Plus, X } from 'lucide-react';
 import { z } from 'zod';
 import ImageUploader from '@/components/admin/ImageUploader';
+import MultiImageUploader from '@/components/admin/MultiImageUploader';
 import { Badge } from '@/components/ui/badge';
 
 const accommodationSchema = z.object({
@@ -22,6 +23,7 @@ const accommodationSchema = z.object({
   description: z.string().max(1000).optional(),
   long_description: z.string().optional(),
   image_url: z.string().url().optional().or(z.literal('')),
+  gallery: z.array(z.string()).optional(),
   capacity: z.string().max(100).optional(),
   price_original: z.number().min(0).optional(),
   price_day: z.number().min(0).optional().nullable(),
@@ -56,6 +58,7 @@ export default function AccommodationEditor() {
     description: '',
     long_description: '',
     image_url: '',
+    gallery: [],
     capacity: '',
     price_original: 0,
     price_day: 0,
@@ -102,6 +105,7 @@ export default function AccommodationEditor() {
         description: existingData.description || '',
         long_description: existingData.long_description || '',
         image_url: existingData.image_url || '',
+        gallery: (existingData.gallery as string[]) || [],
         capacity: existingData.capacity || '',
         price_original: existingData.price_original || 0,
         price_day: existingData.price_day || 0,
@@ -186,6 +190,7 @@ export default function AccommodationEditor() {
         description: data.description || null,
         long_description: data.long_description || null,
         image_url: data.image_url || null,
+        gallery: data.gallery || [],
         capacity: data.capacity || null,
         price_original: data.price_original,
         price_discounted: data.price_original,
@@ -496,6 +501,20 @@ export default function AccommodationEditor() {
                 <ImageUploader
                   value={formData.image_url}
                   onChange={(url) => setFormData((prev) => ({ ...prev, image_url: url }))}
+                  folder="accommodations"
+                />
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Thư viện ảnh</CardTitle>
+                <CardDescription>Ảnh chi tiết của lưu trú</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <MultiImageUploader
+                  value={formData.gallery}
+                  onChange={(urls) => setFormData((prev) => ({ ...prev, gallery: urls }))}
                   folder="accommodations"
                 />
               </CardContent>

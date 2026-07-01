@@ -36,6 +36,7 @@ const staticAccommodations: Record<
     description: string;
     long_description: string;
     image_url: string;
+    gallery?: string[];
     capacity: string;
     price_original: number;
     price_discounted: number;
@@ -54,6 +55,7 @@ const staticAccommodations: Record<
     long_description:
       "Lán lá Hạnh Ngộ là không gian cắm trại độc đáo được thiết kế theo phong cách truyền thống của đồng bào Tây Nguyên. Mái lán được lợp bằng lá cọ tự nhiên, tạo nên không gian mát mẻ và gần gũi với thiên nhiên.\n\nNằm bên bờ sông Sê Rê Pôk, bạn sẽ được đắm mình trong tiếng nước chảy róc rách, tiếng chim hót và không khí trong lành của núi rừng.",
     image_url: lanLaHanhNgoImage,
+    gallery: [],
     capacity: "1-2 khách/lều",
     price_original: 480000,
 
@@ -76,6 +78,7 @@ const staticAccommodations: Record<
     long_description:
       "Homestay An Yên là nhà sàn truyền thống được xây dựng theo lối kiến trúc dân gian Tây Nguyên. Vách gỗ tự nhiên, mái lợp lá cọ tạo nên không gian mộc mạc, ấm cúng.",
     image_url: homestayAnYenImage,
+    gallery: [],
     capacity: "2 khách/phòng",
     price_original: 1000000,
 
@@ -97,6 +100,7 @@ const staticAccommodations: Record<
     long_description:
       "Bungalow An Bình là lựa chọn cao cấp nhất tại Đảo Xanh Ecofarm. Được xây dựng hoàn toàn bằng gỗ tự nhiên.",
     image_url: bungalowAnBinhImage,
+    gallery: [],
     capacity: "2 khách/căn",
     price_original: 1900000,
 
@@ -124,6 +128,7 @@ const staticAccommodations: Record<
     long_description:
       "Nhà Thảnh Thơi là khu nhà nghỉ dành riêng cho gia đình lớn hoặc nhóm bạn. Với sức chứa lên đến 18-20 khách.",
     image_url: nhaThanhThoiImage,
+    gallery: [],
     capacity: "18-20 khách",
     price_original: 1300000,
 
@@ -152,6 +157,7 @@ const staticAccommodations: Record<
     long_description:
       "Nhà An Hòa mang phong cách kiến trúc tân cổ điển, kết hợp giữa vẻ đẹp truyền thống và sự tiện nghi hiện đại.",
     image_url: nhaAnHoaImage,
+    gallery: [],
     capacity: "2 khách/phòng",
     price_original: 1300000,
 
@@ -180,6 +186,7 @@ const staticAccommodations: Record<
     long_description:
       "Lều Sê Rê Pôk là đỉnh cao của trải nghiệm glamping tại Đảo Xanh. Mỗi lều được thiết kế như một phòng khách sạn 4 sao di động.",
     image_url: leuSerepokImage,
+    gallery: [],
     capacity: "2 khách/lều",
     price_original: 1200000,
 
@@ -428,6 +435,32 @@ const ArticleDetail = () => {
                     ))}
                   </div>
                 </motion.div>
+
+                {/* Image Gallery */}
+                {article.gallery && article.gallery.length > 0 && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.4 }}
+                    className="mt-12"
+                  >
+                    <h2 className="font-serif text-2xl font-semibold text-foreground mb-6">
+                      Thư viện ảnh
+                    </h2>
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                      {article.gallery.map((img, index) => (
+                        <div key={index} className="aspect-[4/3] rounded-xl overflow-hidden group">
+                          <img
+                            src={img}
+                            alt={`${article.name} - Ảnh ${index + 1}`}
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            loading="lazy"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
               </div>
 
               {/* Sidebar - Pricing */}
