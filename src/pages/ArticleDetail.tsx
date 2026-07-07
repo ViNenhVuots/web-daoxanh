@@ -477,7 +477,7 @@ const ArticleDetail = () => {
                         {formatPrice(article.price_original || 0)}đ
                       </div>
                       <p className="text-muted-foreground text-sm mt-1">
-                        / {article.unit || 'đêm'} (Giá 2 khách)
+                        / {article.unit || 'đêm'}
                       </p>
                     </div>
 
