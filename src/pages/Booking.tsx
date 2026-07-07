@@ -414,7 +414,18 @@ const Booking = () => {
                           min={1}
                           max={50}
                           value={formData.adultsCount}
-                          onChange={(e) => setFormData({ ...formData, adultsCount: parseInt(e.target.value) || 1 })}
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            setFormData({ 
+                              ...formData, 
+                              adultsCount: val === "" ? "" : Math.max(1, parseInt(val, 10) || 1) 
+                            } as any);
+                          }}
+                          onBlur={(e) => {
+                            if (!e.target.value || parseInt(e.target.value) < 1) {
+                              setFormData({ ...formData, adultsCount: 1 });
+                            }
+                          }}
                           className="h-14"
                         />
                       </div>
@@ -428,7 +439,18 @@ const Booking = () => {
                           min={0}
                           max={50}
                           value={formData.childrenCount}
-                          onChange={(e) => setFormData({ ...formData, childrenCount: parseInt(e.target.value) || 0 })}
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            setFormData({ 
+                              ...formData, 
+                              childrenCount: val === "" ? "" : Math.max(0, parseInt(val, 10) || 0) 
+                            } as any);
+                          }}
+                          onBlur={(e) => {
+                            if (!e.target.value || parseInt(e.target.value) < 0) {
+                              setFormData({ ...formData, childrenCount: 0 });
+                            }
+                          }}
                           className="h-14"
                         />
                       </div>
