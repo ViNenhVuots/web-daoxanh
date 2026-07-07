@@ -19,13 +19,7 @@ const accommodationOptions = [
     priceOriginal: 480000,
     unit: "lều/1 khách",
   },
-  {
-    id: "homestay-an-yen",
-    name: "Homestay An Yên",
-    description: "Thiết kế mộc mạc gần gũi thiên nhiên, sát bờ sông, dưới tán dừa",
-    priceOriginal: 1000000,
-    unit: "1 phòng/2 khách",
-  },
+
   {
     id: "bungalow-an-binh",
     name: "Bungalow An Bình",
@@ -40,19 +34,13 @@ const accommodationOptions = [
     priceOriginal: 1300000,
     unit: "1 phòng/2 khách",
   },
-  {
-    id: "nha-an-hoa",
-    name: "Nhà An Hòa",
-    description: "Nhà An Hòa – Không gian tân cổ điển sang trọng, tọa lạc gần khu trung tâm",
-    priceOriginal: 1300000,
-    unit: "1 phòng/2 khách",
-  },
+
   {
     id: "leu-se-re-pok",
     name: "Lều Sê Rê Pôk",
     description: "Nơi cảm xúc thăng hoa: Sự trải nghiệm cắm trại glamping đẳng cấp vượt trội",
-    priceOriginal: 1200000,
-    unit: "lều/2 khách",
+    priceOriginal: 550000,
+    unit: "1 khách/lều",
   },
 ];
 
@@ -141,6 +129,20 @@ const dayTripPackages = [
     subtitle: "Thể thao mặt nước",
     priceAdult: 120000,
     priceChild: 120000,
+  },
+  {
+    id: "daytrip-chill-sunset",
+    name: "Hoàng hôn Đảo Xanh",
+    subtitle: "Combo Chill Sunset",
+    priceAdult: 599000,
+    priceChild: 525000,
+  },
+  {
+    id: "daytrip-handmade-lantern",
+    name: "Làm đèn thủ công",
+    subtitle: "Mực Trà và Thi",
+    priceAdult: 285000,
+    priceChild: 285000,
   },
 ];
 

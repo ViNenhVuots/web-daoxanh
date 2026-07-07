@@ -42,12 +42,7 @@ export const staticAccommodations = [
     image_url: lanLaHanhNgoImage,
     slug: "lan-la-hanh-ngo",
   },
-  {
-    name: "Homestay An Yên",
-    description: "Thiết kế mộc mạc gần gũi thiên nhiên, sát bờ sông, dưới tán dừa.",
-    image_url: homestayAnYenImage,
-    slug: "homestay-an-yen",
-  },
+
   {
     name: "Bungalow An Bình",
     description: "Nhà gỗ An Bình – Sự giao hòa hoàn hảo giữa tiện nghi và thiên nhiên.",
@@ -60,12 +55,7 @@ export const staticAccommodations = [
     image_url: nhaThanhThoiImage,
     slug: "nha-thanh-thoi",
   },
-  {
-    name: "Nhà An Hòa",
-    description: "Nhà An Hòa – Không gian tân cổ điển sang trọng, tọa lạc gần khu trung tâm.",
-    image_url: nhaAnHoaImage,
-    slug: "nha-an-hoa",
-  },
+
   {
     name: "Lều Sê Rê Pôk",
     description: "Nơi cảm xúc thăng hoa: Sự trải nghiệm cắm trại glamping đẳng cấp vượt trội.",
@@ -102,7 +92,7 @@ export const staticComboPackages = [
     price_child: 719000,
     includes: [
       "Bao gồm các dịch vụ của Gói A",
-      "Tùy chọn lưu trú: Nhà Thảnh Thơi, Homestay An Yên, Phòng khách sạn An Hòa, Lều SêRêPôk"
+      "Tùy chọn lưu trú: Nhà Thảnh Thơi, Lều SêRêPôk"
     ],
     img_url: ecofarmImage,
   },
@@ -216,6 +206,34 @@ export const staticDayTripPackages = [
     includes: [
       "Cano sinh thái tốc độ cao hoặc các môn thể thao mặt nước",
       "Áp dụng từ 6 khách trở lên"
+    ],
+  },
+  {
+    name: "Hoàng hôn Đảo Xanh",
+    slug: "hoang-hon-dao-xanh",
+    price_adult: 599000,
+    price_child: 525000,
+    note: "Combo Chill Sunset (16h - 21h30)",
+    includes: [
+      "Trải nghiệm xe điện, xe đạp",
+      "Trải nghiệm hồ bơi vô cực",
+      "Chèo Sup thư giãn",
+      "Du ngoạn cano sông Sêrêpôk",
+      "BBQ nướng và lẩu 6 món",
+      "Xe đưa rước tận nơi BMT - ĐX - BMT"
+    ],
+  },
+  {
+    name: "Làm đèn thủ công Mực Trà và Thi",
+    slug: "lam-den-thu-cong",
+    price_adult: 285000,
+    price_child: 285000,
+    note: "Giá trải nghiệm: 285.000 VNĐ/set",
+    includes: [
+      "Thưởng trà Sơn Động",
+      "Lựa chọn họa tiết & thư pháp",
+      "Tạo thân đèn trên giấy xuyến chỉ và hạt nút dừa",
+      "Hoàn thiện sản phẩm"
     ],
   },
 ];
