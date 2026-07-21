@@ -13,7 +13,7 @@ import cuisineImage from "@/assets/services/am-thuc.jpg";
 import farmImage from "@/assets/services/nong-trai.jpg";
 
 
-const categories = ["Tất cả", "Cảnh quan", "Lưu trú", "Hoạt động", "Ẩm thực", "Nông trại"];
+const categories = ["Tất cả", "Cảnh quan", "Lưu trú", "Dịch vụ", "Hoạt động", "Ẩm thực", "Nông trại"];
 
 const Gallery = () => {
   const [selectedCategory, setSelectedCategory] = useState("Tất cả");

@@ -11,7 +11,7 @@ import { Plus, Trash2, Loader2, GripVertical, Save } from 'lucide-react';
 import ImageUploader from '@/components/admin/ImageUploader';
 import { useGalleryImages, GalleryImage } from '@/hooks/useGallery';
 
-const categories = ["Cảnh quan", "Lưu trú", "Hoạt động", "Ẩm thực", "Nông trại"];
+const categories = ["Cảnh quan", "Lưu trú", "Dịch vụ", "Hoạt động", "Ẩm thực", "Nông trại"];
 
 export default function GalleryManager() {
   const { toast } = useToast();
