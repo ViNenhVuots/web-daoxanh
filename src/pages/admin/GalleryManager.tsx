@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import AdminLayout from '@/components/admin/AdminLayout';
@@ -26,17 +26,65 @@ export default function GalleryManager() {
   });
   const [editingId, setEditingId] = useState<string | null>(null);
 
+  useEffect(() => {
+    // Tự động sắp xếp lại thứ tự nếu có trùng lặp hoặc khoảng trống
+    if (images && images.length > 0) {
+      const isPerfectlySequential = images.every((img, i) => img.display_order === i);
+      if (!isPerfectlySequential) {
+        const fixOrders = async () => {
+          const updates = images.map((img, index) => ({
+            id: img.id,
+            src: img.src,
+            alt: img.alt,
+            category: img.category,
+            created_at: img.created_at,
+            display_order: index
+          }));
+          const { error } = await supabase.from('gallery_images').upsert(updates);
+          if (!error) {
+            queryClient.invalidateQueries({ queryKey: ['gallery-images'] });
+            toast({ title: 'Đã tự động sắp xếp', description: `Thứ tự hình ảnh đã được chuẩn hóa từ 0 đến ${images.length - 1}` });
+          }
+        };
+        fixOrders();
+      }
+    }
+  }, [images, queryClient, toast]);
+
   const addMutation = useMutation({
     mutationFn: async (data: typeof formData) => {
-      const { error } = await supabase
+      // 1. Thêm ảnh mới vào DB trước để lấy ID
+      const { data: newImg, error: insertError } = await supabase
         .from('gallery_images')
-        .insert([data]);
-      if (error) throw error;
+        .insert([{ ...data }])
+        .select()
+        .single();
+        
+      if (insertError) throw insertError;
+
+      // 2. Chèn vào danh sách hiện tại và cập nhật lại thứ tự toàn bộ từ 0 đến N
+      if (images) {
+        let sorted = [...images];
+        const insertIndex = Math.max(0, Math.min(data.display_order, sorted.length));
+        
+        sorted.splice(insertIndex, 0, newImg);
+        
+        const updates = sorted.map((img, i) => ({
+          id: img.id,
+          src: img.src,
+          alt: img.alt,
+          category: img.category,
+          created_at: img.created_at,
+          display_order: i
+        }));
+        
+        await supabase.from('gallery_images').upsert(updates);
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['gallery-images'] });
       setFormData({ src: '', alt: '', category: 'Cảnh quan', display_order: 0 });
-      toast({ title: 'Đã thêm ảnh', description: 'Hình ảnh đã được thêm vào thư viện.' });
+      toast({ title: 'Đã thêm ảnh', description: 'Hình ảnh đã được thêm vào thư viện và tự động điều chỉnh thứ tự.' });
     },
     onError: (error: any) => {
       toast({ variant: 'destructive', title: 'Lỗi', description: error.message });
@@ -45,16 +93,48 @@ export default function GalleryManager() {
 
   const updateMutation = useMutation({
     mutationFn: async (data: typeof formData & { id: string }) => {
-      const { error } = await supabase
-        .from('gallery_images')
-        .update({
-          src: data.src,
-          alt: data.alt,
-          category: data.category,
-          display_order: data.display_order
-        })
-        .eq('id', data.id);
-      if (error) throw error;
+      if (!images) return;
+
+      let sorted = [...images];
+      const oldIndex = sorted.findIndex(img => img.id === data.id);
+      
+      if (oldIndex === -1) return;
+      
+      const oldOrder = sorted[oldIndex].display_order;
+      const newOrder = data.display_order;
+      
+      if (oldOrder !== newOrder) {
+        // Lấy phần tử ra khỏi mảng
+        const [item] = sorted.splice(oldIndex, 1);
+        
+        // Chèn vào vị trí mới
+        const insertIndex = Math.max(0, Math.min(newOrder, sorted.length));
+        sorted.splice(insertIndex, 0, { ...item, ...data, display_order: insertIndex });
+        
+        // Cập nhật lại thứ tự từ 0 đến N
+        const updates = sorted.map((img, i) => ({
+          id: img.id,
+          src: img.src,
+          alt: img.alt,
+          category: img.category,
+          created_at: img.created_at,
+          display_order: i
+        }));
+        
+        const { error } = await supabase.from('gallery_images').upsert(updates);
+        if (error) throw error;
+      } else {
+        // Chỉ cập nhật thông tin nếu không đổi thứ tự
+        const { error } = await supabase
+          .from('gallery_images')
+          .update({
+            src: data.src,
+            alt: data.alt,
+            category: data.category
+          })
+          .eq('id', data.id);
+        if (error) throw error;
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['gallery-images'] });
