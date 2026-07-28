@@ -7,9 +7,10 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { Plus, Trash2, Loader2, GripVertical, Save, Pencil } from 'lucide-react';
+import { Plus, Trash2, Loader2, Save, Pencil, Pin, PinOff } from 'lucide-react';
 import ImageUploader from '@/components/admin/ImageUploader';
 import { useGalleryImages, GalleryImage } from '@/hooks/useGallery';
+import { Switch } from '@/components/ui/switch';
 
 const categories = ["Cảnh quan", "Lưu trú", "Dịch vụ", "Hoạt động", "Ẩm thực", "Nông trại"];
 
@@ -23,6 +24,7 @@ export default function GalleryManager() {
     alt: '',
     category: 'Cảnh quan',
     display_order: 0,
+    is_pinned: false,
   });
   const [editingId, setEditingId] = useState<string | null>(null);
 
@@ -38,7 +40,8 @@ export default function GalleryManager() {
             alt: img.alt,
             category: img.category,
             created_at: img.created_at,
-            display_order: index
+            display_order: index,
+            is_pinned: img.is_pinned || false
           }));
           const { error } = await supabase.from('gallery_images').upsert(updates);
           if (!error) {
@@ -75,7 +78,8 @@ export default function GalleryManager() {
           alt: img.alt,
           category: img.category,
           created_at: img.created_at,
-          display_order: i
+          display_order: i,
+          is_pinned: img.is_pinned || false
         }));
         
         await supabase.from('gallery_images').upsert(updates);
@@ -83,7 +87,7 @@ export default function GalleryManager() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['gallery-images'] });
-      setFormData({ src: '', alt: '', category: 'Cảnh quan', display_order: 0 });
+      setFormData({ src: '', alt: '', category: 'Cảnh quan', display_order: 0, is_pinned: false });
       toast({ title: 'Đã thêm ảnh', description: 'Hình ảnh đã được thêm vào thư viện và tự động điều chỉnh thứ tự.' });
     },
     onError: (error: any) => {
@@ -118,7 +122,8 @@ export default function GalleryManager() {
           alt: img.alt,
           category: img.category,
           created_at: img.created_at,
-          display_order: i
+          display_order: i,
+          is_pinned: img.is_pinned || false
         }));
         
         const { error } = await supabase.from('gallery_images').upsert(updates);
@@ -130,7 +135,8 @@ export default function GalleryManager() {
           .update({
             src: data.src,
             alt: data.alt,
-            category: data.category
+            category: data.category,
+            is_pinned: data.is_pinned
           })
           .eq('id', data.id);
         if (error) throw error;
@@ -138,7 +144,7 @@ export default function GalleryManager() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['gallery-images'] });
-      setFormData({ src: '', alt: '', category: 'Cảnh quan', display_order: 0 });
+      setFormData({ src: '', alt: '', category: 'Cảnh quan', display_order: 0, is_pinned: false });
       setEditingId(null);
       toast({ title: 'Đã cập nhật', description: 'Thông tin hình ảnh đã được cập nhật thành công.' });
     },
@@ -158,6 +164,20 @@ export default function GalleryManager() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['gallery-images'] });
       toast({ title: 'Đã xóa', description: 'Hình ảnh đã được xóa khỏi thư viện.' });
+    },
+  });
+
+  const togglePinMutation = useMutation({
+    mutationFn: async ({ id, is_pinned }: { id: string, is_pinned: boolean }) => {
+      const { error } = await supabase
+        .from('gallery_images')
+        .update({ is_pinned })
+        .eq('id', id);
+      if (error) throw error;
+    },
+    onSuccess: (data, variables) => {
+      queryClient.invalidateQueries({ queryKey: ['gallery-images'] });
+      toast({ title: variables.is_pinned ? 'Đã ghim ảnh' : 'Đã bỏ ghim ảnh', description: 'Trạng thái ghim đã được cập nhật.' });
     },
   });
 
@@ -182,6 +202,7 @@ export default function GalleryManager() {
       alt: image.alt || '',
       category: image.category,
       display_order: image.display_order || 0,
+      is_pinned: image.is_pinned || false,
     });
     // Cuộn lên form
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -189,7 +210,7 @@ export default function GalleryManager() {
 
   const cancelEdit = () => {
     setEditingId(null);
-    setFormData({ src: '', alt: '', category: 'Cảnh quan', display_order: 0 });
+    setFormData({ src: '', alt: '', category: 'Cảnh quan', display_order: 0, is_pinned: false });
   };
 
   return (
@@ -248,6 +269,14 @@ export default function GalleryManager() {
                     onChange={(e) => setFormData(prev => ({ ...prev, display_order: parseInt(e.target.value) || 0 }))}
                   />
                 </div>
+                <div className="flex items-center space-x-2 pt-2">
+                  <Switch
+                    id="is_pinned"
+                    checked={formData.is_pinned}
+                    onCheckedChange={(checked) => setFormData(prev => ({ ...prev, is_pinned: checked }))}
+                  />
+                  <Label htmlFor="is_pinned" className="cursor-pointer">Ghim ảnh này lên đầu</Label>
+                </div>
                 <div className="flex gap-2">
                   <Button type="submit" className="flex-1" disabled={addMutation.isPending || updateMutation.isPending}>
                     {addMutation.isPending || updateMutation.isPending ? (
@@ -294,6 +323,14 @@ export default function GalleryManager() {
                             <Button
                               variant="secondary"
                               size="icon"
+                              className={`h-8 w-8 ${image.is_pinned ? 'bg-primary text-primary-foreground hover:bg-primary/90' : 'bg-white/80 hover:bg-white text-black'}`}
+                              onClick={() => togglePinMutation.mutate({ id: image.id, is_pinned: !image.is_pinned })}
+                            >
+                              {image.is_pinned ? <PinOff className="h-4 w-4" /> : <Pin className="h-4 w-4" />}
+                            </Button>
+                            <Button
+                              variant="secondary"
+                              size="icon"
                               className="h-8 w-8 bg-white/80 hover:bg-white text-black"
                               onClick={() => handleEdit(image)}
                             >
@@ -309,10 +346,16 @@ export default function GalleryManager() {
                               <Trash2 className="h-4 w-4" />
                             </Button>
                           </div>
-                          <div className="absolute bottom-2 left-2">
+                          <div className="absolute bottom-2 left-2 flex gap-1">
                             <span className="px-2 py-1 bg-black/60 text-white text-[10px] rounded backdrop-blur-sm">
                               {image.category}
                             </span>
+                            {image.is_pinned && (
+                              <span className="px-2 py-1 bg-primary text-primary-foreground text-[10px] font-medium rounded backdrop-blur-sm flex items-center gap-1">
+                                <Pin className="h-3 w-3" />
+                                Đã ghim
+                              </span>
+                            )}
                           </div>
                         </div>
                         <div className="p-3">

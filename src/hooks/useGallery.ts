@@ -8,6 +8,7 @@ export interface GalleryImage {
   category: string;
   display_order: number;
   created_at: string;
+  is_pinned?: boolean;
 }
 
 export function useGalleryImages() {
@@ -17,6 +18,7 @@ export function useGalleryImages() {
       const { data, error } = await supabase
         .from('gallery_images')
         .select('*')
+        .order('is_pinned', { ascending: false })
         .order('display_order', { ascending: true })
         .order('created_at', { ascending: false });
       
