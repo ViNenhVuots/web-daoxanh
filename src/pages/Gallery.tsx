@@ -13,7 +13,24 @@ import cuisineImage from "@/assets/services/am-thuc.jpg";
 import farmImage from "@/assets/services/nong-trai.jpg";
 
 
-const categories = ["Tất cả", "Cảnh quan", "Lưu trú", "Dịch vụ", "Hoạt động", "Ẩm thực", "Nông trại"];
+const categories = [
+  "Tất cả", 
+  "Lều Độc Cư", 
+  "Bungalow An Bình", 
+  "Nhà Thảnh Thơi 1", 
+  "Nhà Thảnh Thơi 2-3", 
+  "Nhà Thảnh Thơi 4-5", 
+  "Lều Sê Rê Pốk"
+];
+
+const categoryInfo: Record<string, { price: string; desc: string }> = {
+  "Lều Độc Cư": { price: "Đang cập nhật", desc: "View sông - Cắm trại lều trong lán - Gắn kết" },
+  "Bungalow An Bình": { price: "Đang cập nhật", desc: "Nhà gỗ An Bình - Sự giao hòa hoàn hảo giữa tiện nghi và thiên nhiên" },
+  "Nhà Thảnh Thơi 1": { price: "Đang cập nhật", desc: "Family hotel - View vườn thoáng mát - Hài hòa từ thiên nhiên đến hiện đại" },
+  "Nhà Thảnh Thơi 2-3": { price: "Đang cập nhật", desc: "Nhà Thảnh Thơi (Family Hotel) - Thảnh thơi nghỉ dưỡng, trọn vẹn bên nhau" },
+  "Nhà Thảnh Thơi 4-5": { price: "Đang cập nhật", desc: "Nhà Thảnh Thơi (Family Hotel) - Thảnh thơi nghỉ dưỡng, trọn vẹn bên nhau" },
+  "Lều Sê Rê Pốk": { price: "1.400.000đ / 2 khách", desc: "Cắm trại glamping - Nơi cảm xúc thăng hoa mới lạ" },
+};
 
 const Gallery = () => {
   const [selectedCategory, setSelectedCategory] = useState("Tất cả");
@@ -79,6 +96,20 @@ const Gallery = () => {
                 </button>
               ))}
             </div>
+            
+            {selectedCategory !== "Tất cả" && categoryInfo[selectedCategory] && (
+              <motion.div 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mt-8 text-center max-w-2xl mx-auto bg-muted/30 p-6 rounded-2xl border border-border/50"
+              >
+                <h3 className="text-xl font-serif text-foreground font-medium mb-2">{selectedCategory}</h3>
+                <p className="text-muted-foreground mb-4">{categoryInfo[selectedCategory].desc}</p>
+                <div className="inline-block bg-primary/10 text-primary px-4 py-2 rounded-full font-medium">
+                  Giá: {categoryInfo[selectedCategory].price}
+                </div>
+              </motion.div>
+            )}
           </div>
         </section>
 

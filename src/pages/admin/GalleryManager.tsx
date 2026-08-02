@@ -12,7 +12,14 @@ import ImageUploader from '@/components/admin/ImageUploader';
 import { useGalleryImages, GalleryImage } from '@/hooks/useGallery';
 import { Switch } from '@/components/ui/switch';
 
-const categories = ["Cảnh quan", "Lưu trú", "Dịch vụ", "Hoạt động", "Ẩm thực", "Nông trại"];
+const categories = [
+  "Lều Độc Cư", 
+  "Bungalow An Bình", 
+  "Nhà Thảnh Thơi 1", 
+  "Nhà Thảnh Thơi 2-3", 
+  "Nhà Thảnh Thơi 4-5", 
+  "Lều Sê Rê Pốk"
+];
 
 export default function GalleryManager() {
   const { toast } = useToast();
@@ -22,7 +29,7 @@ export default function GalleryManager() {
   const [formData, setFormData] = useState({
     src: '',
     alt: '',
-    category: 'Cảnh quan',
+    category: 'Lều Độc Cư',
     display_order: 0,
     is_pinned: false,
   });
@@ -87,7 +94,7 @@ export default function GalleryManager() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['gallery-images'] });
-      setFormData({ src: '', alt: '', category: 'Cảnh quan', display_order: 0, is_pinned: false });
+      setFormData({ src: '', alt: '', category: 'Lều Độc Cư', display_order: 0, is_pinned: false });
       toast({ title: 'Đã thêm ảnh', description: 'Hình ảnh đã được thêm vào thư viện và tự động điều chỉnh thứ tự.' });
     },
     onError: (error: any) => {
@@ -144,7 +151,7 @@ export default function GalleryManager() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['gallery-images'] });
-      setFormData({ src: '', alt: '', category: 'Cảnh quan', display_order: 0, is_pinned: false });
+      setFormData({ src: '', alt: '', category: 'Lều Độc Cư', display_order: 0, is_pinned: false });
       setEditingId(null);
       toast({ title: 'Đã cập nhật', description: 'Thông tin hình ảnh đã được cập nhật thành công.' });
     },
@@ -210,7 +217,7 @@ export default function GalleryManager() {
 
   const cancelEdit = () => {
     setEditingId(null);
-    setFormData({ src: '', alt: '', category: 'Cảnh quan', display_order: 0, is_pinned: false });
+    setFormData({ src: '', alt: '', category: 'Lều Độc Cư', display_order: 0, is_pinned: false });
   };
 
   return (
