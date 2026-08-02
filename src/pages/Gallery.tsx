@@ -14,7 +14,6 @@ import farmImage from "@/assets/services/nong-trai.jpg";
 
 
 const categories = [
-  "Tất cả", 
   "Lều Độc Cư", 
   "Bungalow An Bình", 
   "Nhà Thảnh Thơi 1", 
@@ -33,13 +32,11 @@ const categoryInfo: Record<string, { price: string; desc: string }> = {
 };
 
 const Gallery = () => {
-  const [selectedCategory, setSelectedCategory] = useState("Tất cả");
+  const [selectedCategory, setSelectedCategory] = useState("Lều Độc Cư");
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
   const { data: galleryImages, isLoading } = useGalleryImages();
 
-  const filteredImages = selectedCategory === "Tất cả"
-    ? galleryImages || []
-    : (galleryImages || []).filter((img) => img.category === selectedCategory);
+  const filteredImages = (galleryImages || []).filter((img) => img.category === selectedCategory);
 
   const nextImage = () => {
     if (selectedImage !== null) {
@@ -97,7 +94,7 @@ const Gallery = () => {
               ))}
             </div>
             
-            {selectedCategory !== "Tất cả" && categoryInfo[selectedCategory] && (
+            {categoryInfo[selectedCategory] && (
               <motion.div 
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
