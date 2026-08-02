@@ -23,12 +23,12 @@ const categories = [
 ];
 
 const categoryInfo: Record<string, { price: string; desc: string }> = {
-  "Lều Độc Cư": { price: "Đang cập nhật", desc: "View sông - Cắm trại lều trong lán - Gắn kết" },
-  "Bungalow An Bình": { price: "Đang cập nhật", desc: "Nhà gỗ An Bình - Sự giao hòa hoàn hảo giữa tiện nghi và thiên nhiên" },
-  "Nhà Thảnh Thơi 1": { price: "Đang cập nhật", desc: "Family hotel - View vườn thoáng mát - Hài hòa từ thiên nhiên đến hiện đại" },
-  "Nhà Thảnh Thơi 2-3": { price: "Đang cập nhật", desc: "Nhà Thảnh Thơi (Family Hotel) - Thảnh thơi nghỉ dưỡng, trọn vẹn bên nhau" },
-  "Nhà Thảnh Thơi 4-5": { price: "Đang cập nhật", desc: "Nhà Thảnh Thơi (Family Hotel) - Thảnh thơi nghỉ dưỡng, trọn vẹn bên nhau" },
-  "Lều Sê Rê Pốk": { price: "1.400.000đ / 2 khách", desc: "Cắm trại glamping - Nơi cảm xúc thăng hoa mới lạ" },
+  "Lều Độc Cư": { price: "550.000 VNĐ / khách", desc: "View sông - Cắm trại lều trong lán - Gắn kết" },
+  "Bungalow An Bình": { price: "1.800.000 VNĐ / nhà (2 khách)", desc: "Nhà gỗ An Bình - Sự giao hòa hoàn hảo giữa tiện nghi và thiên nhiên" },
+  "Nhà Thảnh Thơi 1": { price: "1.200.000 VNĐ / phòng (2 khách)", desc: "Family hotel - View vườn thoáng mát - Hài hòa từ thiên nhiên đến hiện đại" },
+  "Nhà Thảnh Thơi 2-3": { price: "2.200.000 VNĐ / căn (4 khách)", desc: "Nhà Thảnh Thơi (Family Hotel) - Thảnh thơi nghỉ dưỡng, trọn vẹn bên nhau" },
+  "Nhà Thảnh Thơi 4-5": { price: "3.500.000 VNĐ / nhà (6 khách)", desc: "Nhà Thảnh Thơi (Family Hotel) - Thảnh thơi nghỉ dưỡng, trọn vẹn bên nhau" },
+  "Lều Sê Rê Pốk": { price: "1.400.000 VNĐ / lều (2 khách)", desc: "Cắm trại glamping - Nơi cảm xúc thăng hoa mới lạ" },
 };
 
 const Gallery = () => {
