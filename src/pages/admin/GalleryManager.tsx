@@ -18,7 +18,12 @@ const categories = [
   "Nhà Thảnh Thơi 1", 
   "Nhà Thảnh Thơi 2-3", 
   "Nhà Thảnh Thơi 4-5", 
-  "Lều Sê Rê Pốk"
+  "Lều Sê Rê Pốk",
+  "Trải nghiệm trong ngày",
+  "Combo 2 ngày 1 đêm",
+  "Ngâm chân thảo dược và tắm lá thuốc",
+  "Trò chơi",
+  "Ẩm thực"
 ];
 
 export default function GalleryManager() {
