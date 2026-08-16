@@ -88,7 +88,7 @@ export function Navbar() {
 
               {/* Phone - Desktop only */}
               <a
-                href="tel:0961898972"
+                href="tel:0974893457"
                 className={`hidden xl:flex items-center gap-2 px-4 py-2 rounded-full transition-all duration-300 ${
                   isScrolled
                     ? "text-foreground/70 hover:text-primary hover:bg-muted"
@@ -96,7 +96,7 @@ export function Navbar() {
                 }`}
               >
                 <Phone size={16} />
-                <span className="font-medium text-sm">096 189 89 72</span>
+                <span className="font-medium text-sm">0974 893 457</span>
               </a>
 
               {/* CTA Button */}
@@ -192,13 +192,13 @@ export function Navbar() {
                     </Button>
                   </Link>
                   <a
-                    href="tel:0961898972"
+                    href="tel:0974893457"
                     className="flex items-center justify-center gap-3 py-4 text-muted-foreground hover:text-primary transition-colors"
                   >
                     <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center">
                       <Phone size={18} />
                     </div>
-                    <span className="font-medium">096 189 89 72</span>
+                    <span className="font-medium">0974 893 457</span>
                   </a>
                 </motion.div>
               </div>

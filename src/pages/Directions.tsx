@@ -79,8 +79,8 @@ export default function Directions() {
                   </div>
                   <div>
                     <h3 className="text-lg font-semibold text-foreground mb-1">{t.directions.contactTitle}</h3>
-                    <a href="tel:0961898972" className="text-accent hover:underline">
-                      096 189 89 72
+                    <a href="tel:0974893457" className="text-accent hover:underline">
+                      0974 893 457
                     </a>
                   </div>
                 </div>
