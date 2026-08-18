@@ -15,6 +15,7 @@ import {
   Loader2,
   UtensilsCrossed,
   TreePine,
+  Phone,
 } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { useAccommodations } from "@/hooks/useAccommodations";
@@ -958,12 +959,20 @@ const Services = () => {
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="text-center"
               >
-                <a href="tel:0974893457">
-                  <Button variant="default" size="lg">
-                    Liên hệ tư vấn
-                    <ArrowRight className="ml-2" size={20} />
-                  </Button>
-                </a>
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                  <a href="tel:0974893457">
+                    <Button variant="default" size="lg">
+                      Liên hệ 0974 893 457
+                      <Phone className="ml-2" size={18} />
+                    </Button>
+                  </a>
+                  <a href="tel:0961898972">
+                    <Button variant="outline" size="lg" className="border-primary text-primary hover:bg-primary/10">
+                      Liên hệ 0961 898 972
+                      <Phone className="ml-2" size={18} />
+                    </Button>
+                  </a>
+                </div>
               </motion.div>
             </div>
           </section>

@@ -555,7 +555,7 @@ const ArticleDetail = () => {
                     </Link>
 
                     <p className="text-xs text-muted-foreground text-center mt-4">
-                      Liên hệ hotline: 0974 893 457
+                      Liên hệ hotline: 0974 893 457 - 0961 898 972
                     </p>
                   </div>
                 </motion.div>

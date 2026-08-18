@@ -87,17 +87,20 @@ export function Navbar() {
               </div>
 
               {/* Phone - Desktop only */}
-              <a
-                href="tel:0974893457"
+              <div
                 className={`hidden xl:flex items-center gap-2 px-4 py-2 rounded-full transition-all duration-300 ${
                   isScrolled
-                    ? "text-foreground/70 hover:text-primary hover:bg-muted"
-                    : "text-white/80 hover:text-white hover:bg-white/10"
+                    ? "text-foreground/70 bg-transparent hover:bg-muted"
+                    : "text-white/80 bg-transparent hover:bg-white/10"
                 }`}
               >
                 <Phone size={16} />
-                <span className="font-medium text-sm">0974 893 457</span>
-              </a>
+                <div className="flex items-center gap-2 font-medium text-sm">
+                  <a href="tel:0974893457" className="hover:text-primary transition-colors">0974 893 457</a>
+                  <span className="opacity-50">|</span>
+                  <a href="tel:0961898972" className="hover:text-primary transition-colors">0961 898 972</a>
+                </div>
+              </div>
 
               {/* CTA Button */}
               <Link to="/dat-phong" className="hidden sm:block">
@@ -191,15 +194,26 @@ export function Navbar() {
                       {t.nav.booking}
                     </Button>
                   </Link>
-                  <a
-                    href="tel:0974893457"
-                    className="flex items-center justify-center gap-3 py-4 text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center">
-                      <Phone size={18} />
-                    </div>
-                    <span className="font-medium">0974 893 457</span>
-                  </a>
+                  <div className="flex flex-col gap-2">
+                    <a
+                      href="tel:0974893457"
+                      className="flex items-center justify-center gap-3 py-2 text-muted-foreground hover:text-primary transition-colors"
+                    >
+                      <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center">
+                        <Phone size={18} />
+                      </div>
+                      <span className="font-medium">0974 893 457</span>
+                    </a>
+                    <a
+                      href="tel:0961898972"
+                      className="flex items-center justify-center gap-3 py-2 text-muted-foreground hover:text-primary transition-colors"
+                    >
+                      <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center">
+                        <Phone size={18} />
+                      </div>
+                      <span className="font-medium">0961 898 972</span>
+                    </a>
+                  </div>
                 </motion.div>
               </div>
             </motion.nav>

@@ -94,6 +94,15 @@ export function Footer() {
                 <span className="font-medium">0974 893 457</span>
               </a>
               <a
+                href="tel:0961898972"
+                className="flex items-center gap-3 text-primary-foreground/70 hover:text-accent transition-colors group"
+              >
+                <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors">
+                  <Phone size={18} className="text-accent" />
+                </div>
+                <span className="font-medium">0961 898 972</span>
+              </a>
+              <a
                 href="mailto:daoxanhecofarmdaklak@gmail.com"
                 className="flex items-center gap-3 text-primary-foreground/70 hover:text-accent transition-colors group"
               >
